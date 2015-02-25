@@ -41,25 +41,24 @@ class Player(object):
 		self.is_alive = is_alive
 
 	def print_stats(self):
-		"""Prints player statistics."""
-		player_stats = (("""{0} || Level: {1} || Experience: {2}/{3}
-Health: {4}/{5} || Strength: {6} || Affinity: {7} || Precision: {8}
-is_alive: {9}!""").format(self.name, self.level, self.exp, self.max_exp, self.hp, self.max_hp, self.strength ,self.affinity, self.precision, self.is_alive))
+		"""
+		Prints player statistics.
+		"""
+		player_stats = ("========================\n{0}, Level {1} \nXP: [{2}/{3}] \nHP: [{4}/{5}] \n* Strength: {6} \n* Affinity: {7} \n* Precision: {8} \n=========================".format(self.name, self.level, self.exp, self.max_exp, self.hp, self.max_hp, self.strength ,self.affinity, self.precision))
 		print(player_stats)
 
 	def check_hp(self):
-		print("check_hp - before:  %s/%s" % (self.hp, self.max_hp))
+		print("check_hp - before:  {0}/{1}".format(self.hp, self.max_hp))
 		if self.hp > self.max_hp:
-			print("check_hp - cur greater than max_hp: %s/%s" % (self.hp, self.max_hp))
+			print("check_hp - cur greater than max_hp: {0}/{1}".format(self.hp, self.max_hp))
 			self.hp = self.max_hp
-			print("check_hp - after:  %s/%s" % (self.hp, self.max_hp))		
+			print("check_hp - after:  {0}/{1}".format(self.hp, self.max_hp))		
 		elif self.hp <= 0:
-			print("check_hp - dead hp: %s/%s" % (self.hp, self.max_hp))
+			print("check_hp - dead hp: {0}/{1}".format(self.hp, self.max_hp))
 			self.is_alive = False
-			print("is_alive: %s!" % self.is_alive)
-			Player.gameover(self)
+			print("is_alive: {0}!".format(self.is_alive))
 		else:
-			print("check_hp - Valid: %s/%s" % (self.hp, self.max_hp))
+			print("check_hp - Valid: {0}/{1}".format(self.hp, self.max_hp))
 
 	def update_stats(self):
 		pass
@@ -71,62 +70,56 @@ is_alive: {9}!""").format(self.name, self.level, self.exp, self.max_exp, self.hp
 
 	def basic_attack(self):
 		physical_damage = self.strength
-		print("basic_attack - %s physical_damage" % physical_damage)
+		print("basic_attack - {0} physical_damage".format(physical_damage))
 		return physical_damage
 
-	def gameover(self):
-		print("Your journey has ended.")
-		#save
-		#system exit
-'''
 	def attack(self, enemy):
-		print (" %s, %s - Level %d\n hp: %d/%d\n Attack: %d\n Defence: %d\n Rage: %s/%s" % (self.name, self.spec, self.level, self.hp, self.maxhp, self.attack ,self.defence, self.rage, self.maxRage))
-		print ""
-		print "Please select an attack.\n1. Basic Attack\n2. %s\n3. %s\n4. Items\n" % (self.skill1, self.skill2)
+		print(" {0}, {1} - Level {2}\n hp: {3}/{4}\n Attack: {5}\n Defence: {6}\n Rage: {7}/{8}".format(self.name, self.spec, self.level, self.hp, self.maxhp, self.attack ,self.defence, self.rage, self.maxRage))
+		print("")
+		print("Please select an attack.\n1. Basic Attack\n2. {0}\n3. {1}\n4. Items\n".format(self.skill1, self.skill2))
 		
 		try:		
-			choice = raw_input("CHOICE >> ")
+			choice = input("CHOICE >> ")
 		except ValueError:
-			print "%s is not an integer!" % choice
-			print "Forgive me, but you have not entered a valid integer option..."
-			print "Closing game, sorry bro"
+			print("{0} is not an integer!".format(choice))
+			print("Forgive me, but you have not entered a valid integer option...")
+			print("Closing game, sorry bro")
 
-		print ""
+		print ("")
 		
 		#Choose attack - Autoattack, skill1, skill2, item
-		pDamage = self.attack - enemy.defence
-		qa1 = self.attack * .75
-		qa2 = self.attack * .50
+		player_damage = self.damage
+		quick_attack_1 = self.attack * .75
+		quick_attack_1qa2 = self.attack * .50
 		es = self.attack + self.level
 
 		if choice == 1:
 			if pDamage <= 0:
-				print ("[PLAYER] >> [Basic Attack] deals 0 physical damage.")
+				print("[PLAYER] >> [Basic Attack] deals 0 physical damage.")
 			else:
 				enemy.hp -= pDamage
-				print ("[PLAYER] >> [Basic Attack] deals (%d) physical damage." % (pDamage))
+				print("[PLAYER] >> [Basic Attack] deals ({0}) physical damage.".format(pDamage))
 		elif int(choice) == 2:
 			if pDamage <= 0:
-				print ("[PLAYER] >> [Quick Attack] deals 0 physical damage.")
-				print ("[PLAYER] >> [Quick Attack] deals 0 physical damage.")
+				print("[PLAYER] >> [Quick Attack] deals 0 physical damage.")
+				print("[PLAYER] >> [Quick Attack] deals 0 physical damage.")
 			else:
 				enemy.hp -= qa1
 				enemy.hp -= qa2
-				print ("[PLAYER] >> [Quick Attack] deals (%d) physical damage." % (qa1))
-				print ("[PLAYER] >> [Quick Attack] deals (%d) physical damage." % (qa2))
+				print("[PLAYER] >> [Quick Attack] deals ({0}) physical damage.".format(qa1))
+				print("[PLAYER] >> [Quick Attack] deals ({0}) physical damage.".format(qa2))
 		elif int(choice) == 3:
 			enemy.hp -= es
-			print ("[PLAYER] >> [Ethereal Strike] deals (%d) ethereal damage." % (es))
+			print("[PLAYER] >> [Ethereal Strike] deals ({0}) ethereal damage.".format(es))
 		elif int(choice) == 4:
-			print "[PLAYER] >> %s uses [Random Potion]!" % self.name
+			print("[PLAYER] >> {0} uses [Random Potion]!".format(self.name))
 		elif int(choice) == 5:
-			print "Resetting Game"
+			print("Resetting Game")
 			#reset()
 		else:
-			print "Invalid Entry - Please selet an option."
+			print("Invalid Entry - Please selet an option.")
 			Player.attack(self, enemy)
 		pass
-
 			
 	def gameover(self):
 		if self.alive == False:
@@ -140,24 +133,6 @@ is_alive: {9}!""").format(self.name, self.level, self.exp, self.max_exp, self.hp
 		else:
 			Player.attack(self, enemy)
 
-
-		if pDamage <= 0:
-			print ("[PLAYER] >> [Basic Attack] deals 0 physical damage.")
-		else:
-			print ("[PLAYER] >> [Basic Attack] deals (%d) physical damage." % (pDamage))
-		pass
-		
-	def gameover(self):
-		if self.alive == False:
-			print("No! I have lost!")
-			sys.exit(0)
-
-	def sequence(self, enemy):
-		Player.checkhp(self)
-		if self.alive == False:
-			Player.gameover(self)
-		else:
-			Player.attack(self, enemy)
 ###
 # Accessors and Mutators
 ###
@@ -193,7 +168,7 @@ is_alive: {9}!""").format(self.name, self.level, self.exp, self.max_exp, self.hp
 
 	def levelUp(self):
 		self.level += 1
-		print ("You are now level %d! You have gained 3 hp, 1 attack, and 1 defence.\n" % (self.level))
+		print("You are now level {0}! You have gained 3 hp, 1 attack, and 1 defence.\n".format(self.level))
 
 		""" Stats for Acolyte && ez mode level up """
 		self.maxhp += 3
@@ -205,7 +180,7 @@ is_alive: {9}!""").format(self.name, self.level, self.exp, self.max_exp, self.hp
 Player.print methods
 
 	def playerStats(self):
-		pStats = (" %s, %s - Level %d - Experience: %d/%d\n hp: %d/%d Attack: %d Defence: %d\n Gold: %d \n Rage: %s/%s" % (self.name, self.spec, self.level, self.exp, self.maxExp, self.hp, self.maxhp, self.attack ,self.defence, self.gold)
+		pStats = (" {}, {} - Level {} - Experience: {}/{}\n hp: {}/{} Attack: {} Defence: {}\n Gold: {} \n Rage: {}/{}" % (self.name, self.spec, self.level, self.exp, self.maxExp, self.hp, self.maxhp, self.attack ,self.defence, self.gold)
 		return pStats		
 
 class Warrior(Player):
@@ -240,7 +215,7 @@ class Warrior(Player):
 			self.rage += pDamage
 			if self.rage > self.maxRage:
 				self.rage = self.maxRage
-			print ("You attack %s for %d and now have %d/%d rage, it has %d hp remaining." % (enemy.name, pDamage, self.rage, self.maxRage, enemy.hp))
+			print ("You attack {} for {} and now have {}/{} rage, it has {} hp remaining." % (enemy.name, pDamage, self.rage, self.maxRage, enemy.hp))
 			if self.rage >= self.skill1rr and self.rage >= 10:
 				Player.skill1(self, enemy)
 			print ""
@@ -250,15 +225,14 @@ class Warrior(Player):
 		if enemy.hp >= 1: 
 			skill1Damage = self.attack - enemy.defence
 			enemy.hp -= skill1Damage
-			print ("You perform a %s for %d, %s has %d hp remaining." % (self.skill1, skill1Damage, enemy.name, enemy.hp))
+			print ("You perform a {} for {}, {} has {} hp remaining." % (self.skill1, skill1Damage, enemy.name, enemy.hp))
 			self.rage -= 10
 """
-'''
-
 if __name__ == "__main__":
-	dead_player = Player(0, 10, 1, 1, 1, 1, 1, 10, "Medell", None, True)
-	alive_player = Player(100, 123, 5, 5, 10, 4, 299, 300, "Althea", "Ethereal", True)
-	glitch_player = Player(999, 998, 99, 99, 99, 23, 10, 25, "Reulan", "Spellblade", True)
+	#(self, hp, max_hp, strength, affinity, precision, level, exp, max_exp, name, is_alive):
+	dead_player = Player(0, 10, 1, 1, 1, 1, 1, 10, "Medell", True)
+	alive_player = Player(100, 123, 5, 5, 10, 4, 299, 300, "Althea", True)
+	glitch_player = Player(999, 998, 99, 99, 99, 23, 10, 25, "Reulan", True)
 	
 	print("=========================D")
 	Player.print_stats(dead_player)
@@ -271,4 +245,4 @@ if __name__ == "__main__":
 	print("=========================G")
 	Player.print_stats(glitch_player)
 	Player.check_hp(glitch_player)
-	Player.basic_attack(glitch_player)	
+	Player.basic_attack(glitch_player)
