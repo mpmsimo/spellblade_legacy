@@ -22,7 +22,9 @@ class Player(object):
 		is_alive - Is the character alive?
 	"""
 	def __init__(self, hp, max_hp, strength, affinity, precision, level, exp, max_exp, name, is_alive):
-		#base stats
+		"""
+		Initialize the constructor.
+		"""
 		self.hp = hp
 		self.max_hp = max_hp
 
@@ -44,7 +46,14 @@ class Player(object):
 		"""
 		Prints player statistics.
 		"""
-		player_stats = ("========================\n{0}, Level {1} \nXP: [{2}/{3}] \nHP: [{4}/{5}] \n* Strength: {6} \n* Affinity: {7} \n* Precision: {8} \n=========================".format(self.name, self.level, self.exp, self.max_exp, self.hp, self.max_hp, self.strength ,self.affinity, self.precision))
+		player_stats = ("""========================
+{0}, Level {1}
+XP: [{2}/{3}]
+HP: [{4}/{5}]
+\t* Strength: {6}
+\t* Affinity: {7} 
+\t* Precision: {8} 
+=========================""".format(self.name, self.level, self.exp, self.max_exp, self.hp, self.max_hp, self.strength ,self.affinity, self.precision))
 		print(player_stats)
 
 	def check_hp(self):
@@ -90,24 +99,24 @@ class Player(object):
 		#Choose attack - Autoattack, skill1, skill2, item
 		player_damage = self.damage
 		quick_attack_1 = self.attack * .75
-		quick_attack_1qa2 = self.attack * .50
+		quick_attack_2 = self.attack * .50
 		es = self.attack + self.level
 
 		if choice == 1:
-			if pDamage <= 0:
+			if player_damage <= 0:
 				print("[PLAYER] >> [Basic Attack] deals 0 physical damage.")
 			else:
-				enemy.hp -= pDamage
-				print("[PLAYER] >> [Basic Attack] deals ({0}) physical damage.".format(pDamage))
+				enemy.hp -= player_damage
+				print("[PLAYER] >> [Basic Attack] deals ({0}) physical damage.".format(player_damage))
 		elif int(choice) == 2:
-			if pDamage <= 0:
+			if player_damage <= 0:
 				print("[PLAYER] >> [Quick Attack] deals 0 physical damage.")
 				print("[PLAYER] >> [Quick Attack] deals 0 physical damage.")
 			else:
-				enemy.hp -= qa1
-				enemy.hp -= qa2
-				print("[PLAYER] >> [Quick Attack] deals ({0}) physical damage.".format(qa1))
-				print("[PLAYER] >> [Quick Attack] deals ({0}) physical damage.".format(qa2))
+				enemy.hp -= quick_attack1
+				enemy.hp -= quick_attack2
+				print("[PLAYER] >> [Quick Attack] deals ({0}) physical damage.".format(quick_attack1))
+				print("[PLAYER] >> [Quick Attack] deals ({0}) physical damage.".format(quick_attack2))
 		elif int(choice) == 3:
 			enemy.hp -= es
 			print("[PLAYER] >> [Ethereal Strike] deals ({0}) ethereal damage.".format(es))
@@ -207,15 +216,15 @@ class Warrior(Player):
 		self.skill2rr = 20
 	
 	def attack(self, enemy):
-		pDamage = self.attack - enemy.defence
-		enemy.hp -= pDamage
-		if pDamage <= 0:
+		player_damage = self.attack - enemy.defence
+		enemy.hp -= player_damage
+		if player_damage <= 0:
 			print ("Your attack deals no damage.")
 		else:
-			self.rage += pDamage
+			self.rage += player_damage
 			if self.rage > self.maxRage:
 				self.rage = self.maxRage
-			print ("You attack {} for {} and now have {}/{} rage, it has {} hp remaining." % (enemy.name, pDamage, self.rage, self.maxRage, enemy.hp))
+			print ("You attack {} for {} and now have {}/{} rage, it has {} hp remaining." % (enemy.name, player_damage, self.rage, self.maxRage, enemy.hp))
 			if self.rage >= self.skill1rr and self.rage >= 10:
 				Player.skill1(self, enemy)
 			print ""
@@ -228,21 +237,3 @@ class Warrior(Player):
 			print ("You perform a {} for {}, {} has {} hp remaining." % (self.skill1, skill1Damage, enemy.name, enemy.hp))
 			self.rage -= 10
 """
-if __name__ == "__main__":
-	#(self, hp, max_hp, strength, affinity, precision, level, exp, max_exp, name, is_alive):
-	dead_player = Player(0, 10, 1, 1, 1, 1, 1, 10, "Medell", True)
-	alive_player = Player(100, 123, 5, 5, 10, 4, 299, 300, "Althea", True)
-	glitch_player = Player(999, 998, 99, 99, 99, 23, 10, 25, "Reulan", True)
-	
-	print("=========================D")
-	Player.print_stats(dead_player)
-	Player.check_hp(dead_player)
-	Player.basic_attack(dead_player)
-	print("=========================A")
-	Player.print_stats(alive_player)
-	Player.check_hp(alive_player)
-	Player.basic_attack(alive_player)
-	print("=========================G")
-	Player.print_stats(glitch_player)
-	Player.check_hp(glitch_player)
-	Player.basic_attack(glitch_player)
