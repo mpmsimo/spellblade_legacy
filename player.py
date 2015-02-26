@@ -21,7 +21,7 @@ class Player(object):
 
 		is_alive - Is the character alive?
 	"""
-	def __init__(self, hp, max_hp, strength, affinity, precision, level, exp, max_exp, name, is_alive):
+	def __init__(self, hp, max_hp, strength, affinity, dexterity, level, exp, max_exp, name, is_alive):
 		"""
 		Initialize the constructor.
 		"""
@@ -30,7 +30,7 @@ class Player(object):
 
 		self.strength = strength
 		self.affinity = affinity
-		self.precision = precision
+		self.dexterity = dexterity
 		
 		#level
 		self.level = level
@@ -46,56 +46,53 @@ class Player(object):
 		"""
 		Prints player statistics.
 		"""
-		player_stats = ("""========================
-{0}, Level {1}
-XP: [{2}/{3}]
-HP: [{4}/{5}]
-\t* Strength: {6}
-\t* Affinity: {7} 
-\t* Precision: {8} 
-=========================""".format(self.name, self.level, self.exp, self.max_exp, self.hp, self.max_hp, self.strength ,self.affinity, self.precision))
-		print(player_stats)
-
+		print(("========================"
+				"{0}, Level {1}"
+				"XP: [{2}/{3}]"
+				"HP: [{4}/{5}]"
+				"\t* Strength: {6}"
+				"\t* Affinity: {7}"
+				"\t* Dexterity: {8}" 
+				"=========================").format(self.name, self.level, self.exp, \
+													self.max_exp, self.hp, self.max_hp, self.strength, \
+													self.affinity, self.dexterity))
+'''
 	def check_hp(self):
-		print("check_hp - before:  {0}/{1}".format(self.hp, self.max_hp))
+		#print("check_hp - before:  {0}/{1}".format(self.hp, self.max_hp))
 		if self.hp > self.max_hp:
-			print("check_hp - cur greater than max_hp: {0}/{1}".format(self.hp, self.max_hp))
+			#print("check_hp - cur greater than max_hp: {0}/{1}".format(self.hp, self.max_hp))
 			self.hp = self.max_hp
-			print("check_hp - after:  {0}/{1}".format(self.hp, self.max_hp))		
+			#print("check_hp - after:  {0}/{1}".format(self.hp, self.max_hp))		
 		elif self.hp <= 0:
-			print("check_hp - dead hp: {0}/{1}".format(self.hp, self.max_hp))
+			#print("check_hp - dead hp: {0}/{1}".format(self.hp, self.max_hp))
 			self.is_alive = False
-			print("is_alive: {0}!".format(self.is_alive))
+			#print("is_alive: {0}!".format(self.is_alive))
 		else:
-			print("check_hp - Valid: {0}/{1}".format(self.hp, self.max_hp))
-
-	def update_stats(self):
-		pass
+			#print("check_hp - Valid: {0}/{1}".format(self.hp, self.max_hp))
 
 	def equip_weapon(self, weapon):
-		self.strength = self.strength + weapon.stats['strength']
-		self.affinity = self.affinity + weapon.stats['affinity']
-		self.precision = self.precision + weapon.stats['precision']
+		weapon_damage = weapon.get_damage()
+		weapon_passive = weapon.get_passive()
+		weapon_active = weapon.get_active()
+		equipped_weapon = ("weapon_damage":weapon_damage,
+						"weapon_active":weapon_active,
+						"weapon_passive":weapon_passive)
+		return equipped_weapon
 
-	def basic_attack(self):
+	def get_weapon_damage(weapon):
+		return equipped_weapon["weapon_damage"]
+
+	def get_weapon_active(weapon):
+		return equipped_weapon["weapon_active"]
+
+	def get_weapon_passive(weapon):
+		return equipped_weapon["weapon_passive"]
+
+	def basic_attack(self, weapon):
 		physical_damage = self.strength
 		print("basic_attack - {0} physical_damage".format(physical_damage))
 		return physical_damage
 
-	def attack(self, enemy):
-		print(" {0}, {1} - Level {2}\n hp: {3}/{4}\n Attack: {5}\n Defence: {6}\n Rage: {7}/{8}".format(self.name, self.spec, self.level, self.hp, self.maxhp, self.attack ,self.defence, self.rage, self.maxRage))
-		print("")
-		print("Please select an attack.\n1. Basic Attack\n2. {0}\n3. {1}\n4. Items\n".format(self.skill1, self.skill2))
-		
-		try:		
-			choice = input("CHOICE >> ")
-		except ValueError:
-			print("{0} is not an integer!".format(choice))
-			print("Forgive me, but you have not entered a valid integer option...")
-			print("Closing game, sorry bro")
-
-		print ("")
-		
 		#Choose attack - Autoattack, skill1, skill2, item
 		player_damage = self.damage
 		quick_attack_1 = self.attack * .75
@@ -103,11 +100,7 @@ HP: [{4}/{5}]
 		es = self.attack + self.level
 
 		if choice == 1:
-			if player_damage <= 0:
-				print("[PLAYER] >> [Basic Attack] deals 0 physical damage.")
-			else:
-				enemy.hp -= player_damage
-				print("[PLAYER] >> [Basic Attack] deals ({0}) physical damage.".format(player_damage))
+			basic_attack()
 		elif int(choice) == 2:
 			if player_damage <= 0:
 				print("[PLAYER] >> [Quick Attack] deals 0 physical damage.")
@@ -115,11 +108,14 @@ HP: [{4}/{5}]
 			else:
 				enemy.hp -= quick_attack1
 				enemy.hp -= quick_attack2
-				print("[PLAYER] >> [Quick Attack] deals ({0}) physical damage.".format(quick_attack1))
-				print("[PLAYER] >> [Quick Attack] deals ({0}) physical damage.".format(quick_attack2))
+				print("[PLAYER] >> [Quick Attack] deals ({0}) physical \
+						damage.".format(quick_attack1))
+				print("[PLAYER] >> [Quick Attack] deals ({0}) physical \
+						damage.".format(quick_attack2))
 		elif int(choice) == 3:
 			enemy.hp -= es
-			print("[PLAYER] >> [Ethereal Strike] deals ({0}) ethereal damage.".format(es))
+			print("[PLAYER] >> [Ethereal Strike] deals ({0}) ethereal \
+					 damage.".format(es))
 		elif int(choice) == 4:
 			print("[PLAYER] >> {0} uses [Random Potion]!".format(self.name))
 		elif int(choice) == 5:
@@ -177,14 +173,15 @@ HP: [{4}/{5}]
 
 	def levelUp(self):
 		self.level += 1
-		print("You are now level {0}! You have gained 3 hp, 1 attack, and 1 defence.\n".format(self.level))
+		print("You are now level {0}! You have gained 3 hp, 1 attack, \
+				and 1 defence.\n".format(self.level))
 
 		""" Stats for Acolyte && ez mode level up """
 		self.maxhp += 3
 		self.hp = self.maxhp
 		self.attack += 1
 		self.defence += 1
-
+'''
 """
 Player.print methods
 
