@@ -5,88 +5,47 @@ Add player with HP, Attack, and defence.
 msimo - 1/7/2015
 """
 
-class Player(object):
-	""" __init__(int, int, int)__
-		hp - Base player hp
-		max_hp - Base player maximum hp
-		attack - Base player damage
-		affinity - Base player affinity
-
-		level - Player level
-		exp - Player experience
-		level_exp - Max exp for player level (Maybe should be in the leveling function)
-		
-		name - Player's Character name.
-		class - Player's class.
-
-		is_alive - Is the character alive?
-	"""
-	def __init__(self, hp, max_hp, strength, affinity, dexterity, level, exp, max_exp, name, is_alive):
-		"""
-		Initialize the constructor.
-		"""
+class Character(object):
+	def __init__(self, hp, max_hp, name):
+		"""Base character class for players, enemies and NPC's."""
 		self.hp = hp
 		self.max_hp = max_hp
+		self.name = name
+
+class Soulgem(object):
+	def __init__(self, level, exp, max_exp):
+		"""Contains the level and experience for the soulgem."""
+		self.level = level
+		self.exp = exp
+		self.max_exp = max_exp
+
+class Player(Character):
+	def __init__(self, hp, max_hp, name, strength, affinity, dexterity):
+		"""Creates the player object, and has the methods which the player can use."""
+		self.hp = hp
+		self.max_hp = max_hp
+		self.name = name
 
 		self.strength = strength
 		self.affinity = affinity
 		self.dexterity = dexterity
-		
-		#level
-		self.level = level
-		self.exp = exp
-		self.max_exp = max_exp
-		
-
-		#player info
-		self.name = name
-		self.is_alive = is_alive
 
 	def print_stats(self):
-		"""
-		Prints player statistics.
-		"""
-		print(("========================"
-				"{0}, Level {1}"
-				"XP: [{2}/{3}]"
-				"HP: [{4}/{5}]"
-				"\t* Strength: {6}"
-				"\t* Affinity: {7}"
-				"\t* Dexterity: {8}" 
-				"=========================").format(self.name, self.level, self.exp, \
-													self.max_exp, self.hp, self.max_hp, self.strength, \
-													self.affinity, self.dexterity))
-'''
-	def check_hp(self):
-		#print("check_hp - before:  {0}/{1}".format(self.hp, self.max_hp))
-		if self.hp > self.max_hp:
-			#print("check_hp - cur greater than max_hp: {0}/{1}".format(self.hp, self.max_hp))
-			self.hp = self.max_hp
-			#print("check_hp - after:  {0}/{1}".format(self.hp, self.max_hp))		
-		elif self.hp <= 0:
-			#print("check_hp - dead hp: {0}/{1}".format(self.hp, self.max_hp))
-			self.is_alive = False
-			#print("is_alive: {0}!".format(self.is_alive))
-		else:
-			#print("check_hp - Valid: {0}/{1}".format(self.hp, self.max_hp))
+		"""Prints player statistics."""
+		print(("=========================\n"
+				"{0} - [{1}/{2} hitpoints]\n"
+				"\t* Strength: {3}\n"
+				"\t* Affinity: {4}\n"
+				"\t* Dexterity: {5}\n" 
+				"=========================").format(self.name, self.hp, self.max_hp, \
+													self.strength, self.affinity, \
+													self.dexterity))
 
 	def equip_weapon(self, weapon):
-		weapon_damage = weapon.get_damage()
-		weapon_passive = weapon.get_passive()
-		weapon_active = weapon.get_active()
-		equipped_weapon = ("weapon_damage":weapon_damage,
-						"weapon_active":weapon_active,
-						"weapon_passive":weapon_passive)
-		return equipped_weapon
-
-	def get_weapon_damage(weapon):
-		return equipped_weapon["weapon_damage"]
-
-	def get_weapon_active(weapon):
-		return equipped_weapon["weapon_active"]
-
-	def get_weapon_passive(weapon):
-		return equipped_weapon["weapon_passive"]
+		weapon_stats = weapon.get_stats()
+		self.strength += weapon_stats["strength"]
+		self.affinity += weapon_stats["affinity"]
+		self.dexterity += weapon_stats["dexterity"]
 
 	def basic_attack(self, weapon):
 		physical_damage = self.strength
@@ -126,11 +85,6 @@ class Player(object):
 			Player.attack(self, enemy)
 		pass
 			
-	def gameover(self):
-		if self.alive == False:
-			print("No! I have lost!")
-			sys.exit(0)
-
 	def sequence(self, enemy):
 		Player.checkhp(self)
 		if self.alive == False:
@@ -138,9 +92,7 @@ class Player(object):
 		else:
 			Player.attack(self, enemy)
 
-###
-# Accessors and Mutators
-###
+########## Accessors and Mutators ##########
 	def setStats(self, hp, attack, defence):
 		self.hp = hp
 		self.attack = attack
@@ -152,11 +104,7 @@ class Player(object):
 	def setSpec(self, spec):
 		self.spec = spec
 
-	#def setMainHand(self, mainHand)
-
-###
-# Gold & Experience
-###
+########## Gold & Experience ##########
 	def calculateExp(self, exp):
 		totalExp = exp + self.exp
 		if totalExp >= self.maxExp:
@@ -182,7 +130,6 @@ class Player(object):
 		self.attack += 1
 		self.defence += 1
 '''
-"""
 Player.print methods
 
 	def playerStats(self):
@@ -233,4 +180,4 @@ class Warrior(Player):
 			enemy.hp -= skill1Damage
 			print ("You perform a {} for {}, {} has {} hp remaining." % (self.skill1, skill1Damage, enemy.name, enemy.hp))
 			self.rage -= 10
-"""
+'''
