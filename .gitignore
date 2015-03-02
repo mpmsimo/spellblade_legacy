@@ -1,0 +1,14 @@
+#Python optimization.
+__pycache__/
+*.py[cod]
+
+#File locks
+#*~
+
+#Log files (for now)
+.log
+
+#Generated files
+#.json
+.txt
+

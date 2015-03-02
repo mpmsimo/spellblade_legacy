@@ -1,92 +1,55 @@
 """
-weapon.py - 
+weapon.py - Creating a weapon/item template that characters can equip.
 msimo - 1/10/15
 """
 import random, sys, getpass
 
 """
-Weapon Class
-
-calc_dps()
-Item Level
-Rarity
-
 Stats
 Damage
 +static
 +attack%, arp%
-
-Grip
 Rune
-
-Restriction
-Level Requirement
 
 Flavor Text
 """
 
 class Weapon(object):
 
-    def __init__(self, category, subclass, damage):
+    def __init__(self, name, category, subclass, damage, stats):
         """Constructs the base weapon with a category and a subclass."""
         
+        self.name = name
         self.category = category
         self.subclass = subclass
         self.damage = damage
-        self.passive = None
-        self.active = None
+        self.stats = {"strength": stats["strength"],
+                    "affinity": stats["affinity"],
+                    "dexterity": stats["dexterity"]}
 
     def print_stats(self):
-        """Prints player statistics."""
-        #weapon_stats = (("Category: {0} || Attack: {1} || Strength: {2} || Affinity: {3} || Precision: {4}".format(self.category, self.attack, self.stats['strength'], self.stats['affinity'], self.stats['precision'])))
+        """Prints weapon statistics."""
         weapon_stats = (("=========================\n"
-                        "[{0} - {1}]\n"
-                        "\t* Damage: {2}\n"
-                        "\t* Active: {3}\n"
-                        "\t* Passive: {4}\n"
-                        "=========================").format(self.category, self.subclass, \
-                                                            self.damage, self.active, self.passive))
+                        "{0} - [{1}, {2}]\n"
+                        "  Damage: {3}\n"
+                        "\t* Strength: {4}\n"
+                        "\t* Affinity: {5}\n"
+                        "\t* Dexterity: {6}\n"
+                        "=========================").format(self.name, self.category, \
+                                                            self.subclass, self.damage, \
+                                                            self.stats["strength"], self.stats["affinity"], self.stats["dexterity"]))
         print(weapon_stats)
 
     def get_damage(self):
-        print("damage: {0}".format(self.damage))
         return(self.damage)
 
-    def set_damage(self,  damage):
+    def set_damage(self, damage):
         new_damage = damage
-        print(("setdamage\n"
-                "Old: damage {0}\n"
-                "New: new_damage {1}").format(self.damage, new_damage))
-        return new_damage
 
-    def get_passive(self):
-        print("passive: {0}".format(self.passive))
-        return(self.passive)
+    def get_stats(self):
+        return self.stats
 
-    def set_passive(self, passive):
-        new_passive = passive
-        print(("setpassive\n"
-                "Old: passive {0}\n"
-                "New: new_passive {1}").format(self.passive, new_passive))
-        return new_passive
-
-    def get_active(self):
-        print("active: {0}".format(self.active))
-        return(self.active)
-
-    def set_active(self, active):
-        new_active = active
-        print(("setactive\n"
-                "Old: active {0}\n"
-                "New: new_active {1}").format(self.active, new_active))
-        return new_active
-
-
-if __name__ == "__main__":
-    category = "Main-hand"
-    subclass = "Spellblade"
-    damage = 170
-
-    weapon = Weapon(category, subclass, damage)
-
-    Weapon.print_stats(weapon)
+    def set_stats(self, new_stats):
+        self.stats["strength"] = new_stats["strength"]
+        self.stats["affinity"] = new_stats["affinity"]
+        self.stats["dexterity"] = new_stats["dexterity"]
