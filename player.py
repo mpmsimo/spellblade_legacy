@@ -46,13 +46,13 @@ class Player(object):
 		"""
 		Prints player statistics.
 		"""
-		print(("========================"
-				"{0}, Level {1}"
-				"XP: [{2}/{3}]"
-				"HP: [{4}/{5}]"
-				"\t* Strength: {6}"
-				"\t* Affinity: {7}"
-				"\t* Dexterity: {8}" 
+		print(("\n========================\n"
+				"{0}, Level {1}\n"
+				"XP: [{2}/{3}]\n"
+				"HP: [{4}/{5}]\n"
+				"\t* Strength: {6}\n"
+				"\t* Affinity: {7}\n"
+				"\t* Dexterity: {8}\n" 
 				"=========================").format(self.name, self.level, self.exp, \
 													self.max_exp, self.hp, self.max_hp, self.strength, \
 													self.affinity, self.dexterity))

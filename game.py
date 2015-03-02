@@ -29,7 +29,7 @@ def main():
 	player_weapon.get_active()
 
 	hero.print_stats()
-	hero.check_hp()
+	#hero.check_hp()
 	#hero.equip_weapon(player_weapon)
 
 if __name__ == "__main__":
