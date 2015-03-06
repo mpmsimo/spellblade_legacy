@@ -7,6 +7,10 @@ Python 3.3.6
 import weapon, player
 
 def main():
+	def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, magic):
+	althea = player.Player(100, "Althea", 10, 1337, 2048, 7, 4, 10)
+	althea.print_stats()
+'''
 	hero = player.Player(10, 12, 5, 5, 10, 4, 250, 300, "Althea", True)
 	#dead_player = Player(0, 10, 1, 1, 1, 1, 1, 10, "Medell", True)
 	#alive_player = Player(100, 123, 5, 5, 10, 4, 299, 300, "Althea", True)
@@ -62,7 +66,6 @@ def main():
     equipped_weapon.set_damage(171)
     equipped_weapon.get_damage()
     equipped_weapon.print_stats()
->>>>>>> 0833693910b41b60f0d49eb24022d964035fe647
+'''
 
-if __name__ == "__main__":
-	main()  
+if __name__ == "__main__": main()  
