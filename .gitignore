@@ -1,6 +1,7 @@
 #Python optimization.
 __pycache__/
 *.py[cod]
+.pyc
 
 #File locks
 #*~
