@@ -7,7 +7,6 @@ Python 3.3.6
 import weapon, player
 
 def main():
-<<<<<<< HEAD
 	hero = player.Player(10, 12, 5, 5, 10, 4, 250, 300, "Althea", True)
 	#dead_player = Player(0, 10, 1, 1, 1, 1, 1, 10, "Medell", True)
 	#alive_player = Player(100, 123, 5, 5, 10, 4, 299, 300, "Althea", True)
@@ -32,7 +31,7 @@ def main():
 	hero.print_stats()
 	#hero.check_hp()
 	#hero.equip_weapon(player_weapon)
-=======
+
 	########## Stats for testing Weapon ##########
     weapon_name = "Crowlissa"
     weapon_category = "Main-hand"
