@@ -12,39 +12,33 @@ class Character(object):
 		self.max_hp = max_hp
 		self.name = name
 
-class Soulgem(object):
-	def __init__(self, level, exp, max_exp):
-		"""Contains the level and experience for the soulgem."""
+class Player(Character):
+	def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, magic):
+		"""Creates the player object, and has the methods which the player can use."""
+		self.max_hp = max_hp
+		self.hp = max_hp
+		self.name = name
+		
 		self.level = level
 		self.exp = exp
 		self.max_exp = max_exp
 
-class Player(Character):
-	def __init__(self, hp, max_hp, name, strength, affinity, dexterity):
-		"""Creates the player object, and has the methods which the player can use."""
-		self.hp = hp
-		self.max_hp = max_hp
-		self.name = name
-
 		self.strength = strength
-		self.affinity = affinity
 		self.dexterity = dexterity
+		self.magic = magic
 
 	def print_stats(self):
-<<<<<<< HEAD
-		"""
-		Prints player statistics.
-		"""
+		"""Prints player statistics."""
 		print(("\n========================\n"
 				"{0}, Level {1}\n"
 				"XP: [{2}/{3}]\n"
 				"HP: [{4}/{5}]\n"
 				"\t* Strength: {6}\n"
-				"\t* Affinity: {7}\n"
-				"\t* Dexterity: {8}\n" 
+				"\t* Dexterity: {7}\n"
+				"\t* Magic: {8}\n" 
 				"=========================").format(self.name, self.level, self.exp, \
 													self.max_exp, self.hp, self.max_hp, self.strength, \
-													self.affinity, self.dexterity))
+													self.dexterity, self.magic))
 '''
 	def check_hp(self):
 		#print("check_hp - before:  {0}/{1}".format(self.hp, self.max_hp))
@@ -158,7 +152,7 @@ class Player(Character):
 		self.hp = self.maxhp
 		self.attack += 1
 		self.defence += 1
-'''
+
 Player.print methods
 
 	def playerStats(self):

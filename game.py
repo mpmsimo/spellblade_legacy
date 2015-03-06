@@ -7,7 +7,7 @@ Python 3.3.6
 import weapon, player
 
 def main():
-	def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, magic):
+	#def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, magic):
 	althea = player.Player(100, "Althea", 10, 1337, 2048, 7, 4, 10)
 	althea.print_stats()
 '''
