@@ -1,28 +1,24 @@
 """
 player.py - Default player class
 
-Add player with HP, Attack, and defence.
-msimo - 1/7/2015
+Author: mpmsimo
+Created: 1/7/2015
+Updated: 5/6/2015
+
+A player object with HP, name, level, exp, and basic stats.
 """
 
-class Character(object):
-	def __init__(self, hp, max_hp, name):
-		"""Base character class for players, enemies and NPC's."""
-		self.hp = hp
-		self.max_hp = max_hp
-		self.name = name
+import character 
 
-class Player(Character):
+class Player(character.Character):
 	def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, magic):
 		"""Creates the player object, and has the methods which the player can use."""
 		self.max_hp = max_hp
 		self.hp = max_hp
 		self.name = name
-		
 		self.level = level
 		self.exp = exp
 		self.max_exp = max_exp
-
 		self.strength = strength
 		self.dexterity = dexterity
 		self.magic = magic
@@ -39,7 +35,7 @@ class Player(Character):
 				"=========================").format(self.name, self.level, self.exp, \
 													self.max_exp, self.hp, self.max_hp, self.strength, \
 													self.dexterity, self.magic))
-'''
+
 	def check_hp(self):
 		#print("check_hp - before:  {0}/{1}".format(self.hp, self.max_hp))
 		if self.hp > self.max_hp:
@@ -52,29 +48,18 @@ class Player(Character):
 			#print("is_alive: {0}!".format(self.is_alive))
 		else:
 			#print("check_hp - Valid: {0}/{1}".format(self.hp, self.max_hp))
-=======
-		"""Prints player statistics."""
-		print(("=========================\n"
-				"{0} - [{1}/{2} hitpoints]\n"
-				"\t* Strength: {3}\n"
-				"\t* Affinity: {4}\n"
-				"\t* Dexterity: {5}\n" 
-				"=========================").format(self.name, self.hp, self.max_hp, \
-													self.strength, self.affinity, \
-													self.dexterity))
->>>>>>> 0833693910b41b60f0d49eb24022d964035fe647
 
 	def equip_weapon(self, weapon):
 		weapon_stats = weapon.get_stats()
 		self.strength += weapon_stats["strength"]
-		self.affinity += weapon_stats["affinity"]
+		self.affinity += weapon_stat"affinity"]
 		self.dexterity += weapon_stats["dexterity"]
 
 	def basic_attack(self, weapon):
 		physical_damage = self.strength
 		print("basic_attack - {0} physical_damage".format(physical_damage))
 		return physical_damage
-
+'''
 		#Choose attack - Autoattack, skill1, skill2, item
 		player_damage = self.damage
 		quick_attack_1 = self.attack * .75
