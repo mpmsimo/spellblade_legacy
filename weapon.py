@@ -1,24 +1,21 @@
 """
 weapon.py - Creating a weapon/item template that characters can equip.
-msimo - 1/10/15
-"""
-import random, sys, getpass
 
-"""
-Stats
-Damage
-+static
-+attack%, arp%
-Rune
+Author: mpmsimo
+Created: 1/10/15
+Updated: 5/19/15
 
-Flavor Text
+Creates a weapon object, with a damage value, weapon type and stats. 
 """
+
+import random
+import sys
+
+import getpass
 
 class Weapon(object):
-
     def __init__(self, name, category, subclass, damage, stats):
         """Constructs the base weapon with a category and a subclass."""
-        
         self.name = name
         self.category = category
         self.subclass = subclass
@@ -41,15 +38,19 @@ class Weapon(object):
         print(weapon_stats)
 
     def get_damage(self):
+    """Returns weapon damage"""
         return(self.damage)
 
     def set_damage(self, damage):
+    """Sets weapon damage"""
         new_damage = damage
 
     def get_stats(self):
+    """Returns the weapon object"""
         return self.stats
 
     def set_stats(self, new_stats):
+    """Returns weapons stats if they exist"""
         self.stats["strength"] = new_stats["strength"]
         self.stats["affinity"] = new_stats["affinity"]
         self.stats["dexterity"] = new_stats["dexterity"]
