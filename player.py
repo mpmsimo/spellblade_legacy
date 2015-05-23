@@ -3,39 +3,52 @@ player.py - Default player class
 
 Author: mpmsimo
 Created: 1/7/2015
-Updated: 5/6/2015
+Updated: 5/23/2015
 
 A player object with HP, name, level, exp, and basic stats.
 """
 
-import character 
+#import character
 
-class Player(character.Character):
-	def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, magic):
-		"""Creates the player object, and has the methods which the player can use."""
-		self.max_hp = max_hp
-		self.hp = max_hp
-		self.name = name
-		self.level = level
-		self.exp = exp
-		self.max_exp = max_exp
-		self.strength = strength
-		self.dexterity = dexterity
-		self.magic = magic
+class Player(object):
+    def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, intelligence):
+        """Creates the player object, and has the methods which the player can use."""
+        self.max_hp = max_hp
+        self.name = name
+        self.level = level
+        self.exp = exp
+        self.max_exp = max_exp
+        self.strength = strength
+        self.dexterity = dexterity
+        self.intelligence = intelligence
 
-	def print_stats(self):
-		"""Prints player statistics."""
-		print(("\n========================\n"
-				"{0}, Level {1}\n"
-				"XP: [{2}/{3}]\n"
-				"HP: [{4}/{5}]\n"
-				"\t* Strength: {6}\n"
-				"\t* Dexterity: {7}\n"
-				"\t* Magic: {8}\n" 
-				"=========================").format(self.name, self.level, self.exp, \
-													self.max_exp, self.hp, self.max_hp, self.strength, \
-													self.dexterity, self.magic))
+    def print_stats(self):
+        """Prints player statistics."""
+        print(("\n========================\n"
+            "{0}, Level {1}\n"
+            "XP: [{2}/{3}]\n"
+            "HP: [{4}/{5}]\n"
+            "\t* Strength: {6}\n"
+            "\t* Dexterity: {7}\n"
+            "\t* Intelligence: {8}\n"
+            "=========================").format(self.name, self.level, self.exp, \
+                                                    self.max_exp, self.hp, self.max_hp, self.strength, \
+                                                    self.dexterity, self.intelligence))
 
+    def equip_weapon(self, weapon):
+        """Equips a weapon gaining the statistics from the spellgems"""
+        weapon_stats = weapon.get_stats()
+        self.strength += weapon_stats["strength"]
+        self.intelligence += weapon_stats["intelligence"]
+        self.dexterity += weapon_stats["dexterity"]
+
+    def basic_attack(self, weapon):
+        """Returns and prints amount of damage a basic attak does"""
+        physical_damage = self.strength
+        print("basic_attack - {0} physical_damage".format(physical_damage))
+        return physical_damage
+
+'''
 	def check_hp(self):
 		#print("check_hp - before:  {0}/{1}".format(self.hp, self.max_hp))
 		if self.hp > self.max_hp:
@@ -47,20 +60,10 @@ class Player(character.Character):
 			self.is_alive = False
 			#print("is_alive: {0}!".format(self.is_alive))
 		else:
+            pass
 			#print("check_hp - Valid: {0}/{1}".format(self.hp, self.max_hp))
-
-	def equip_weapon(self, weapon):
-		weapon_stats = weapon.get_stats()
-		self.strength += weapon_stats["strength"]
-		self.affinity += weapon_stat"affinity"]
-		self.dexterity += weapon_stats["dexterity"]
-
-	def basic_attack(self, weapon):
-		physical_damage = self.strength
-		print("basic_attack - {0} physical_damage".format(physical_damage))
-		return physical_damage
-'''
-		#Choose attack - Autoattack, skill1, skill2, item
+		
+        #Choose attack - Autoattack, skill1, skill2, item
 		player_damage = self.damage
 		quick_attack_1 = self.attack * .75
 		quick_attack_2 = self.attack * .50
@@ -187,5 +190,5 @@ class Warrior(Player):
 			skill1Damage = self.attack - enemy.defence
 			enemy.hp -= skill1Damage
 			print ("You perform a {} for {}, {} has {} hp remaining." % (self.skill1, skill1Damage, enemy.name, enemy.hp))
-			self.rage -= 10
+            self.rage -= 10
 '''

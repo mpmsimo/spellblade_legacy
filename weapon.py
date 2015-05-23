@@ -38,19 +38,19 @@ class Weapon(object):
         print(weapon_stats)
 
     def get_damage(self):
-    """Returns weapon damage"""
+        """Returns weapon damage"""
         return(self.damage)
 
     def set_damage(self, damage):
-    """Sets weapon damage"""
+        """Sets weapon damage"""
         new_damage = damage
 
     def get_stats(self):
-    """Returns the weapon object"""
+        """Returns the weapon object"""
         return self.stats
 
     def set_stats(self, new_stats):
-    """Returns weapons stats if they exist"""
+        """Returns weapons stats if they exist"""
         self.stats["strength"] = new_stats["strength"]
         self.stats["affinity"] = new_stats["affinity"]
         self.stats["dexterity"] = new_stats["dexterity"]
