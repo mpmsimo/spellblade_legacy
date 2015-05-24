@@ -14,6 +14,7 @@ class Player(object):
     def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, intelligence):
         """Creates the player object, and has the methods which the player can use."""
         self.max_hp = max_hp
+        self.hp = max_hp
         self.name = name
         self.level = level
         self.exp = exp

@@ -14,27 +14,34 @@ import sys
 import getpass
 
 class Weapon(object):
-    def __init__(self, name, category, subclass, damage, stats):
-        """Constructs the base weapon with a category and a subclass."""
+    def __init__(self, name, item_slot, weapon_type, damage, stats, spellgems):
+        """Constructs the base weapon with a item_slot and a weapon_type."""
         self.name = name
-        self.category = category
-        self.subclass = subclass
+        self.item_slot = item_slot
+        self.weapon_type = weapon_type
         self.damage = damage
         self.stats = {"strength": stats["strength"],
-                    "affinity": stats["affinity"],
+                    "intelligence": stats["intelligence"],
                     "dexterity": stats["dexterity"]}
-
+        self.spellgems = {"sg1": None,
+                            "sg2": None,
+                            "sg3": None}
     def print_stats(self):
         """Prints weapon statistics."""
         weapon_stats = (("=========================\n"
                         "{0} - [{1}, {2}]\n"
                         "  Damage: {3}\n"
                         "\t* Strength: {4}\n"
-                        "\t* Affinity: {5}\n"
+                        "\t* Intelligence: {5}\n"
                         "\t* Dexterity: {6}\n"
-                        "=========================").format(self.name, self.category, \
-                                                            self.subclass, self.damage, \
-                                                            self.stats["strength"], self.stats["affinity"], self.stats["dexterity"]))
+                        "\n  Spellgems\n"
+                        #"\t* Spellgem 1: {7}\n"
+                        #"\t* Spellgem 2: {8}"\n"
+                        #"\t* Spellgem 3: {9}"\n"
+                        "=========================").format(self.name, self.item_slot, \
+                                                            self.weapon_type, self.damage, \
+                                                            self.stats["strength"],self.stats["intelligence"], self.stats["dexterity"])) #\
+                                                            #self.spellgems["sg1"], self.spellgems["sg2"], self.spellgems["sg3"]))
         print(weapon_stats)
 
     def get_damage(self):
@@ -52,5 +59,10 @@ class Weapon(object):
     def set_stats(self, new_stats):
         """Returns weapons stats if they exist"""
         self.stats["strength"] = new_stats["strength"]
-        self.stats["affinity"] = new_stats["affinity"]
+        self.stats["intelligence"] = new_stats["intelligence"]
         self.stats["dexterity"] = new_stats["dexterity"]
+
+'''
+class Sword(Weapon):
+    def __init__(self, name, item_slot, weapon_type="Sword", damage, stats, spellgems):
+'''
