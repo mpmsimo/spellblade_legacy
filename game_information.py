@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 game_information.py - Contains information that is used across the game.
 

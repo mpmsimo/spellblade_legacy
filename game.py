@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 game.py - This is where objects are created and the game is played.
 
@@ -17,7 +18,7 @@ def character_creation():
     print("Welcome to the Spellblade: Legacy!")
     player_name = name_character()
     choose_affinity()
-    soulgem = choose_soulgem()
+    #choose_soulgem()
 
 def name_character():
     """Renames the player"""
@@ -29,7 +30,7 @@ def choose_affinity():
     """Option to see str/dex/int heroes."""
     affinities = ["Strength", "Dexterity", "Intelligence"]
     for i in range(len(affinities)):
-        print("Index: {0}\nElement: {1}".format(affinities[i], i))
+        print("{0}. {1}".format(i+1, affinities[i]))
 
 def choose_soulgem():
     """Soulgem choice"""

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 weapon.py - Creating a weapon/item template that characters can equip.
 

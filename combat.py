@@ -1,9 +1,13 @@
-#!/usr/bin/python
-#combat.py - Combat testing, auto combat.
-#msimo - 09/06/14
-import random, sys
+#!/usr/bin/env python
+"""
+combat.py - Combat testing, auto combat.
+
+Author: mpmsimo
+Created: 09/06/14
+"""
 
 """
+
 Player Class
 
 Add player with HP, Attack, and defence.
@@ -26,6 +30,7 @@ class Player(object):
 
 		gold - Total gold of player.
 		saveFileName - The name of the savefile for this character."""
+		
 	def __init__(self, health, attack, defence):
 		#base stats
 		self.attack = attack

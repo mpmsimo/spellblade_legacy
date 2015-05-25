@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 soulgem.py - Creating a template for soulgems.
 
