@@ -18,7 +18,6 @@ def character_creation():
     print("Welcome to the Spellblade: Legacy!")
     player_name = name_character()
     choose_affinity()
-    #choose_soulgem()
 
 def name_character():
     """Renames the player"""
@@ -31,6 +30,7 @@ def choose_affinity():
     affinities = ["Strength", "Dexterity", "Intelligence"]
     for i in range(len(affinities)):
         print("{0}. {1}".format(i+1, affinities[i]))
+        raw_input("Show aligned souls for affinity chosen.")
 
 def choose_soulgem():
     """Soulgem choice"""
