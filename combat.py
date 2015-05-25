@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #combat.py - Combat testing, auto combat.
 #msimo - 09/06/14
-import random, sys, getpass
+import random, sys
 
 """
 Player Class

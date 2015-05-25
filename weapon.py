@@ -3,15 +3,9 @@ weapon.py - Creating a weapon/item template that characters can equip.
 
 Author: mpmsimo
 Created: 1/10/15
-Updated: 5/19/15
 
 Creates a weapon object, with a damage value, weapon type and sockets. 
 """
-
-import random
-import sys
-
-import getpass
 
 class Weapon(object):
     def __init__(self, name, item_slot, weapon_type, damage, sockets, ability):

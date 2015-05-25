@@ -3,12 +3,9 @@ player.py - Default player class
 
 Author: mpmsimo
 Created: 1/7/2015
-Updated: 5/23/2015
 
 A player object with HP, name, level, exp, and basic stats.
 """
-
-#import character
 
 class Player(object):
     def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, intelligence):
