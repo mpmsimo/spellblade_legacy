@@ -5,8 +5,8 @@ msimo - 2/21/2015
 Python 3.3.6
 """
 import weapon
-import sword
 import player
+import tabulate
 
 def character_creation():
     """Choose a character name"""
@@ -23,10 +23,15 @@ def name_character():
 def choose_soulgem():
     """Soulgem choice"""
     print("Select a member of the Order of the Spellblade you would like to embody.")
-    print("1. Althea [Fighter, Strength]\n"
+    print("1. Althea\n"
+            "Class: Fighter\n"
+            "Affinity: Strength]\n"
             "Ability: Crushing Strike\n"
-            "Passive: Intelligence is added to strength for damage rolls\n"
-            "400 HP, 6 STR, 4 DEX, 2 INT")
+            "Passive: Intelligence is added to strength for damage rolls.\n"
+            "HP 400 HP\n"
+            "Strength: 6\n"
+            "Dexterity: 4\n"
+            "Intelligence: 2\n")
     return "Althea"
 
 def main():
