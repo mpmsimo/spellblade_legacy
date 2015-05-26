@@ -9,7 +9,7 @@ A player object with HP, name, level, exp, and basic stats.
 """
 
 class Player(object):
-    def __init__(self, max_hp, name, level, exp, max_exp, strength, dexterity, intelligence):
+    def __init__(self, name, level, exp, max_exp, max_hp, strength, dexterity, intelligence):
         """Creates the player object, and has the methods which the player can use."""
         self.max_hp = max_hp
         self.hp = max_hp
@@ -20,6 +20,14 @@ class Player(object):
         self.strength = strength
         self.dexterity = dexterity
         self.intelligence = intelligence
+
+        self.weapon_damage = None
+        self.weapon_affinity = None
+
+        self.soulgem_affinity = None
+        self.soulgem_archetype = None
+        self.soulgem_ability = None
+        self.soulgem_passive = None
 
     def print_stats(self):
         """Prints player statistics."""
@@ -40,6 +48,20 @@ class Player(object):
         self.strength += weapon_stats["strength"]
         self.intelligence += weapon_stats["intelligence"]
         self.dexterity += weapon_stats["dexterity"]
+
+    def equip_soulgem(self, soulgem):
+        """Equips a soulgem giving the player stats and abilities from a hero."""
+        self.max_hp = soulgem.max_hp
+        self.hp = self.max_hp
+        self.strength += soulgem.strength
+        self.intelligence += soulgem.dexterity
+        self.dexterity += soulgem.intelligence
+
+        #Soulgem specific stats
+        self.soulgem_archetype = soulgem.archetype
+        self.soulgem_affinity = soulgem.affinity
+        self.soulgem_ability = soulgem.ability
+        self.soulgem_passive = soulgem.passive
 
     def basic_attack(self, weapon):
         """Returns and prints amount of damage a basic attak does"""
