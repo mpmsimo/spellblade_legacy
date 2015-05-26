@@ -15,9 +15,10 @@ import game_information as gi
 
 def character_creation():
     """Choose a character name"""
-    print("Welcome to the Spellblade: Legacy!")
-    player_name = name_character()
-    choose_affinity()
+    print("Welcome to the Spellblade: Legacy!\n")
+    #player_name = name_character()
+    affinity = choose_affinity()
+    soulgem = choose_soulgem(affinity)
 
 def name_character():
     """Renames the player"""
@@ -30,18 +31,26 @@ def choose_affinity():
     affinities = ["Strength", "Dexterity", "Intelligence"]
     for i in range(len(affinities)):
         print("{0}. {1}".format(i+1, affinities[i]))
-        raw_input("Show aligned souls for affinity chosen.")
+    choice = int(raw_input("Show aligned souls for affinity: "))
+    if choice in range(1, len(affinities)+1):
+        print("You chose {0}.\n".format(affinities[choice-1]))
+    else:
+        print(range(1, len(affinities)+1))
+        print("You have entered an incorrect value, please try again.\n")
+        choose_affinity()
+    return affinities[choice-1]
 
-def choose_soulgem():
+def choose_soulgem(affinity):
     """Soulgem choice"""
     count = 1
     souls = gi.souls
     for hero in souls:
-        print("\n{0}.".format(count))
         sg = soulgem.Soulgem(souls[hero][0], souls[hero][1], souls[hero][2], souls[hero][3], souls[hero][4], souls[hero][5], souls[hero][6], souls[hero][7], souls[hero][8])
-        sg.print_soulgem()
-        count+=1
-    choice = raw_input("Select a member of the Order of the Spellblade you would like to embody.")
+        if affinity == sg.affinity:
+            print("\n{0}. {1}".format(count, sg.name))
+            sg.print_soulgem()
+            count+=1
+    choice = int(raw_input("\nSelect a member of the Order of the Spellblade you would like to embody: "))
 
 def main():
     character_creation()
