@@ -15,7 +15,6 @@ import game_information as gi
 
 def character_creation():
     """Choose a character name"""
-    print("Welcome to the Spellblade: Legacy!\n")
     #player_name = name_character()
     affinity = choose_affinity()
     soulgem = choose_soulgem(affinity)
@@ -31,9 +30,12 @@ def choose_affinity():
     affinities = ["Strength", "Dexterity", "Intelligence"]
     for i in range(len(affinities)):
         print("{0}. {1}".format(i+1, affinities[i]))
-    choice = int(raw_input("Show aligned souls for affinity: "))
+    print("")
+    choice = int(raw_input("Show aligned souls for affinity (0 to start over): "))
     if choice in range(1, len(affinities)+1):
-        print("You chose {0}.\n".format(affinities[choice-1]))
+        print("\nYou chose {0}.\n".format(affinities[choice-1]))
+    elif choice == 0:
+        character_creation()
     else:
         print(range(1, len(affinities)+1))
         print("You have entered an incorrect value, please try again.\n")
@@ -43,23 +45,34 @@ def choose_affinity():
 def choose_soulgem(affinity):
     """Soulgem choice"""
     count = 1
+    soul_list = []
     souls = gi.souls
     for hero in souls:
         sg = soulgem.Soulgem(souls[hero][0], souls[hero][1], souls[hero][2], souls[hero][3], souls[hero][4], souls[hero][5], souls[hero][6], souls[hero][7], souls[hero][8])
         if affinity == sg.affinity:
-            print("\n{0}. {1}".format(count, sg.name))
+            soul_list.append(hero)
+            print("{0}\n{1}. {2}".format(80 * "=", count, sg.name))
             sg.print_soulgem()
             count+=1
-    choice = int(raw_input("\nSelect a member of the Order of the Spellblade you would like to embody: "))
+    print(80 * "=")
+    choice = int(raw_input("\nChoose the soul you would like to control (0 to start over): "))
+    if choice in range(1, len(soul_list)+1):
+        print("\nYou chose {0}.\n".format(soul_list[choice-1]))
+    elif choice == 0:
+        character_creation()
+    else:
+        print("You have entered an incorrect value, please try again.\n")
+        choose_soulgem(affinity)
 
 def main():
+    print("Welcome to the Spellblade: Legacy!")
     character_creation()
-    althea = player.Player(100, "Althea", 10, 1337, 2048, 0, 0, 0)
-    althea.print_stats()
-    longsword = weapon.Weapon("Longsword", "Main Hand", "Sword", 10, 1, "Sweeping Strike")
-    longsword.print_weapon()
-    #althea.equip_weapon(longsword)
-    althea.print_stats()
+#    althea = player.Player(100, "Althea", 10, 1337, 2048, 0, 0, 0)
+#    althea.print_stats()
+#    longsword = weapon.Weapon("Longsword", "Main Hand", "Sword", 10, 1, "Sweeping Strike")
+#    longsword.print_weapon()
+#    #althea.equip_weapon(longsword)
+#    althea.print_stats()
 
 if __name__ == "__main__":
     main()
