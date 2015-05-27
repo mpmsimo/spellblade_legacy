@@ -4,9 +4,10 @@ game.py - This is where objects are created and the game is played.
 
 Author: mpmsimo
 Created: 2/21/2015
-"""
 
-import tabulate
+To-do:
+ * Fix error handling for menus (they current accept strings where they shouldnt)
+"""
 
 import weapon
 import player
@@ -14,13 +15,15 @@ import soulgem
 import game_information as gi
 
 souls = gi.souls
+weapons = gi.weapons
 
 def character_creation():
     """Choose a character name"""
     player_name = name_character()
     affinity = choose_affinity()
     soulgem = choose_soulgem(affinity)
-    player = generate_player(player_name, soulgem)
+    weapon = choose_weapon()
+    player = generate_player(player_name, soulgem, weapon)
     return player
 
 def name_character():
@@ -67,25 +70,46 @@ def choose_soulgem(affinity):
         choose_soulgem(affinity)
     return soul_list[choice-1]
 
-def generate_player(name, soulgem):
+def choose_weapon():
+    """Weapon choice"""
+    count = 1
+    weapon_list = []
+    for wep in weapons:
+        item = weapon.Weapon(weapons[wep][0], weapons[wep][1], weapons[wep][2], weapons[wep][3], weapons[wep][4], weapons[wep][5])
+        weapon_list.append(wep)
+        print("{0}\n{1}. {2}".format(80 * "=", count, item.name))
+        item.print_weapon()
+        count+=1
+    print(80 * "=")
+    choice = int(raw_input("\nChoose the weapon you would like to use (0 to start over): "))
+    if choice in range(1, len(weapon_list)+1):
+        print("\nYou chose {0}.\n".format(weapon_list[choice-1]))
+    elif choice == 0:
+        character_creation()
+    else:
+        print("You have entered an incorrect choice, please try again.\n")
+        choose_weapon()
+    return weapon_list[choice-1]
+
+def generate_player(name, selected_soulgem, selected_weapon):
     for hero in souls:
-        if hero == soulgem:
+        if hero == selected_soulgem:
             sg = soulgem.Soulgem(souls[hero][0], souls[hero][1], souls[hero][2], souls[hero][3], souls[hero][4], souls[hero][5], souls[hero][6], souls[hero][7], souls[hero][8])
-            spellblade_player = player.Player(1, name, 1, 0, 50, 0, 0, 0)
+            spellblade_player = player.Player(name, 1, 0, 50, 1, 0, 0, 0)
             spellblade_player.equip_soulgem(sg)
+    for wep in weapons:
+        if wep == selected_weapon:
+            item = weapon.Weapon(weapons[wep][0], weapons[wep][1], weapons[wep][2], weapons[wep][3], weapons[wep][4], weapons[wep][5])
+            spellblade_player.equip_weapon(item)
             break
     return spellblade_player
 
 def main():
     print("Welcome to the Spellblade: Legacy!")
     spellblade_player = character_creation()
-    spellblade_player.print_stats()
-    althea = player.Player(100, "Althea", 10, 1337, 2048, 0, 0, 0)
-    althea.print_stats()
-    #longsword = weapon.Weapon("Longsword", "Main Hand", "Sword", 10, 1, "Sweeping Strike")
-    #longsword.print_weapon()
-    #althea.equip_weapon(longsword)
-    #althea.print_stats()
+    spellblade_player.print_basic()
+    spellblade_player.print_advanced()
+    spellblade_player.show_abilities()
 
 if __name__ == "__main__":
     main()

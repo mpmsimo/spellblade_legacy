@@ -8,6 +8,8 @@ Created: 1/10/15
 Creates a weapon object, with a damage value, weapon type and sockets. 
 """
 
+from tabulate import tabulate
+
 class Weapon(object):
     def __init__(self, name, item_slot, weapon_type, damage, sockets, ability):
         """Constructs the base weapon with a item_slot and a weapon_type."""
@@ -18,17 +20,29 @@ class Weapon(object):
         self.sockets = sockets
         self.ability = ability
 
+    def get_item_slot(self):
+        if self.item_slot == 0:
+            return "Main Hand"
+        elif self.item_slot == 1:
+            return "Off Hand"
+        elif self.item_slot == 2:
+            return "Two Handed"
+        else:
+            return "Unknown"
+
     def print_weapon(self):
         """Prints weapon statistics."""
-        weapon_sockets = (("=========================\n"
-                        "{0} - [{1}, {2}]\n"
-                        "  Damage: {3}\n"
-                        "\t* Sockets: {4}\n"
-                        "\t* Ability: {5}\n"
-                        "=========================").format(self.name, self.item_slot, \
-                                                            self.weapon_type, self.damage, \
-                                                            self.sockets, self.ability))
-        print(weapon_sockets)
+        item_slot_string = self.get_item_slot()
+        weapon = (("{0} - [{1}, {2}]\n"
+                    "\tDamage: {3}\n"
+                    "\tSockets: {4}\n").format(self.name, item_slot_string, \
+                                                self.weapon_type, self.damage, \
+                                                self.sockets["sockets"]["amount"]))
+        print(weapon)
+
+        headers = ["Type", "Name", "Description", "Damage"]
+        table = [[self.ability["ability"]["type"], self.ability["ability"]["name"], self.ability["ability"]["description"]]]
+        print tabulate(table, headers, tablefmt="plain")  
 
     def get_damage(self):
         """Returns weapon damage"""

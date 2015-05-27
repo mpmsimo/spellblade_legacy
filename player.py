@@ -8,28 +8,47 @@ Created: 1/7/2015
 A player object with HP, name, level, exp, and basic stats.
 """
 
+from tabulate import tabulate
+
 class Player(object):
     def __init__(self, name, level, exp, max_exp, max_hp, strength, dexterity, intelligence):
         """Creates the player object, and has the methods which the player can use."""
-        self.max_hp = max_hp
-        self.hp = max_hp
-        self.name = name
         self.level = level
         self.exp = exp
         self.max_exp = max_exp
+        self.max_hp = max_hp
+        self.hp = max_hp
+        self.name = name
         self.strength = strength
         self.dexterity = dexterity
         self.intelligence = intelligence
 
-        self.weapon_damage = None
+        self.weapon_name = None
         self.weapon_affinity = None
+        self.weapon_damage = None
+        self.weapon_item_slot = None
+        self.weapon_type = None
+        self.weapon_damage = None
+        self.weapon_sockets = None
+        self.weapon_ability = None
 
+        self.soulgem_name = None
+        self.soulgem_max_hp = None
+        self.soulgem_hp = None
+        self.soulgem_strength = None
+        self.soulgem_dexterity = None
+        self.soulgem_intelligence = None
         self.soulgem_affinity = None
         self.soulgem_archetype = None
         self.soulgem_ability = None
         self.soulgem_passive = None
 
-    def print_stats(self):
+    def print_debug(self):
+        """Prints debug information."""
+        print("Player\nStr: {0}\nDex: {1}\nInt: {2}\n".format(self.strength, self.dexterity, self.intelligence))
+        print("Soulgem\nStr: {0}\nDex: {1}\nInt: {2}\n".format(self.soulgem_strength, self.soulgem_dexterity, self.soulgem_intelligence))
+
+    def print_basic(self):
         """Prints player statistics."""
         print(("\n========================\n"
             "{0}, Level {1}\n"
@@ -42,26 +61,58 @@ class Player(object):
                                                     self.max_exp, self.hp, self.max_hp, self.strength, \
                                                     self.dexterity, self.intelligence))
 
+    def print_advanced(self):
+        """Prints player statistics."""
+        print(("\n========================\n"
+            "{0}, Level {1}\n"
+            "XP: [{2}/{3}]\n"
+            "HP: [{4}/{5}]\n"
+            "\t* Strength: {6}\n"
+            "\t* Dexterity: {7}\n"
+            "\t* Intelligence: {8}\n"
+            "\nWeapon: {9}, {10}\n"
+            "\t* Damage: {11}\n"
+            "\t* Sockets: {12}\n"
+            "=========================").format(self.name, self.level, self.exp, \
+                                                    self.max_exp, self.hp, self.max_hp, self.strength, \
+                                                    self.dexterity, self.intelligence, self.weapon_name, self.weapon_type, self.weapon_damage, self.weapon_sockets["sockets"]["amount"]))
+
     def equip_weapon(self, weapon):
-        """Equips a weapon gaining the statistics from the spellgems"""
-        weapon_stats = weapon.get_stats()
-        self.strength += weapon_stats["strength"]
-        self.intelligence += weapon_stats["intelligence"]
-        self.dexterity += weapon_stats["dexterity"]
+        """Equips a weapon"""
+        self.weapon_name = weapon.name
+        self.weapon_damage = weapon.damage
+        self.weapon_sockets = weapon.sockets
+        self.weapon_item_slot = weapon.item_slot
+        self.weapon_type = weapon.weapon_type
+        self.weapon_ability = weapon.ability
 
     def equip_soulgem(self, soulgem):
         """Equips a soulgem giving the player stats and abilities from a hero."""
-        self.max_hp = soulgem.max_hp
-        self.hp = self.max_hp
-        self.strength += soulgem.strength
-        self.intelligence += soulgem.dexterity
-        self.dexterity += soulgem.intelligence
-
         #Soulgem specific stats
+        self.soulgem_name = soulgem.name
+        self.soulgem_max_hp = soulgem.max_hp
+
+        self.soulgem_strength = soulgem.strength
+        self.soulgem_dexterity = soulgem.dexterity
+        self.soulgem_intelligence = soulgem.intelligence 
         self.soulgem_archetype = soulgem.archetype
         self.soulgem_affinity = soulgem.affinity
         self.soulgem_ability = soulgem.ability
         self.soulgem_passive = soulgem.passive
+
+        # Assigning stats to player
+        self.max_hp = self.soulgem_max_hp
+        self.hp = self.max_hp
+        self.strength += self.soulgem_strength
+        self.intelligence += self.soulgem_intelligence
+        self.dexterity += self.soulgem_dexterity
+
+    def show_abilities(self):
+        headers = ["Type", "Name", "Description", "Damage"]
+        table = [[self.soulgem_ability["ability"]["type"], self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["description"]], \
+                        [self.soulgem_passive["passive"]["type"], self.soulgem_passive["passive"]["name"], self.soulgem_passive["passive"]["description"]], \
+                        [self.weapon_ability["ability"]["type"], self.weapon_ability["ability"]["name"], self.weapon_ability["ability"]["description"]]]
+        print tabulate(table, headers, tablefmt="plain")
 
     def basic_attack(self, weapon):
         """Returns and prints amount of damage a basic attak does"""
