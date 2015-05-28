@@ -114,19 +114,25 @@ def generate_player(name, selected_soulgem, selected_weapon):
 
 def generate_enemy():
     for enemy in enemies:
-        print(enemies[enemy])
         e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5])
-        e.print_basic()
+        return e
+
+def combat(player, enemy):
+    """The most basic combat"""
+    print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
+    turn_no = 0
+    while enemy.hp > 1:
+        player.attack_menu()
+        #enemy.attack()
 
 def main():
     print("Welcome to the Spellblade: Legacy!")
     sblplayer = character_creation()
-    sblplayer.print_basic()
+    #sblplayer.print_basic()
     sblplayer.print_advanced()
     sblplayer.show_abilities()
-    #sblplayer.attack_menu()
-    #sblplayer.parse_sg_ability()
+    e = generate_enemy()
+    combat(sblplayer, e)
 
 if __name__ == "__main__":
-    #main()
-    generate_enemy()
+    main()

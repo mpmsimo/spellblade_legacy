@@ -142,13 +142,14 @@ class Player(Character):
         self.dexterity += self.soulgem_dexterity
 
     def show_abilities(self):
+        print("")
         headers = ["Type", "Name", "Description", "Damage"]
         table = [[self.soulgem_ability["ability"]["type"], self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["description"]], \
                         [self.soulgem_passive["passive"]["type"], self.soulgem_passive["passive"]["name"], self.soulgem_passive["passive"]["description"]], \
                         [self.weapon_ability["ability"]["type"], self.weapon_ability["ability"]["name"], self.weapon_ability["ability"]["description"]]]
         print tabulate(table, headers, tablefmt="plain")
 
-    def parse_sg_ability(self):
+    def use_soulgem_ability(self):
         """Takes in a 'damage' value from an ability and parses the value"""
         print("{0}\n{1} damage\n".format(self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["damage"]))
         if self.soulgem_ability["ability"]["name"] == "Prismatic Barrage":
@@ -157,6 +158,8 @@ class Player(Character):
         elif self.soulgem_ability["ability"]["name"] == "Charge":
             print("Target has been stunned for {0} turns".format(self.soulgem_ability["ability"]["damage"]))
 
+    def use_weapon_ability(self):
+        print("{0} uses a {1}".format(self.name, self.weapon_ability["ability"]["name"]))
 
     def basic_attack(self):
         """Returns and prints amount of damage a basic attak does"""
@@ -177,6 +180,6 @@ class Player(Character):
         if choice == 1:
             print(basic_attack())
         elif int(choice) == 2:
-            parse_sg_ability()
+            player.use_soulgem_ability()
         elif int(choice) == 3:
-            pass
+            player.use_weapon_ability()
