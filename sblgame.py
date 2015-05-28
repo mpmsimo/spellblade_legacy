@@ -95,21 +95,23 @@ def generate_player(name, selected_soulgem, selected_weapon):
     for hero in souls:
         if hero == selected_soulgem:
             sg = soulgem.Soulgem(souls[hero][0], souls[hero][1], souls[hero][2], souls[hero][3], souls[hero][4], souls[hero][5], souls[hero][6], souls[hero][7], souls[hero][8])
-            spellblade_player = player.Player(name, 1, 0, 50, 1, 0, 0, 0)
-            spellblade_player.equip_soulgem(sg)
+            sblplayer = player.Player(name, 1, 0, 50, 1, 0, 0, 0)
+            sblplayer.equip_soulgem(sg)
     for wep in weapons:
         if wep == selected_weapon:
             item = weapon.Weapon(weapons[wep][0], weapons[wep][1], weapons[wep][2], weapons[wep][3], weapons[wep][4], weapons[wep][5])
-            spellblade_player.equip_weapon(item)
+            sblplayer.equip_weapon(item)
             break
-    return spellblade_player
+    return sblplayer
 
 def main():
     print("Welcome to the Spellblade: Legacy!")
-    spellblade_player = character_creation()
-    spellblade_player.print_basic()
-    spellblade_player.print_advanced()
-    spellblade_player.show_abilities()
+    sblplayer = character_creation()
+    sblplayer.print_basic()
+    sblplayer.print_advanced()
+    sblplayer.show_abilities()
+    sblplayer.parse_soulgem_ability()
+    sblplayer.attack_menu()
 
 if __name__ == "__main__":
     main()
