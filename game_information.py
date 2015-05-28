@@ -29,3 +29,7 @@ weapons = {"longsword": ["Longsword", 2, "Sword", 10,  \
           "sabre": ["Sabre", 0, "Sword", 5,  \
             {"sockets": {"amount": 0}}, \
             {"ability": {"name": "3x strike", "description": "Quickly attack three times in a row", "damage": "damage + .5(dex)", "type": "skill", "range": "melee"}}]}
+
+# A dictonary of enemies
+#def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
+enemies = {"goblin": ["Goblin", 2, 50, 4, 1, 0]}

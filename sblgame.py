@@ -16,6 +16,8 @@ import game_information as gi
 
 souls = gi.souls
 weapons = gi.weapons
+enemies = gi.enemies
+affinity = None
 
 def character_creation():
     """Choose a character name"""
@@ -24,6 +26,7 @@ def character_creation():
     soulgem = choose_soulgem(affinity)
     weapon = choose_weapon()
     player = generate_player(player_name, soulgem, weapon)
+    player = generate_player("Reulan", soulgem, weapon)
     return player
 
 def name_character():
@@ -55,6 +58,11 @@ def choose_soulgem(affinity):
     for hero in souls:
         sg = soulgem.Soulgem(souls[hero][0], souls[hero][1], souls[hero][2], souls[hero][3], souls[hero][4], souls[hero][5], souls[hero][6], souls[hero][7], souls[hero][8])
         if affinity == sg.affinity:
+            soul_list.append(hero)
+            print("{0}\n{1}. {2}".format(80 * "=", count, sg.name))
+            sg.print_soulgem()
+            count+=1
+        elif affinity == None:
             soul_list.append(hero)
             print("{0}\n{1}. {2}".format(80 * "=", count, sg.name))
             sg.print_soulgem()
@@ -104,14 +112,21 @@ def generate_player(name, selected_soulgem, selected_weapon):
             break
     return sblplayer
 
+def generate_enemy():
+    for enemy in enemies:
+        print(enemies[enemy])
+        e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5])
+        e.print_basic()
+
 def main():
     print("Welcome to the Spellblade: Legacy!")
     sblplayer = character_creation()
     sblplayer.print_basic()
     sblplayer.print_advanced()
     sblplayer.show_abilities()
-    sblplayer.parse_soulgem_ability()
-    sblplayer.attack_menu()
+    #sblplayer.attack_menu()
+    #sblplayer.parse_sg_ability()
 
 if __name__ == "__main__":
-    main()
+    #main()
+    generate_enemy()

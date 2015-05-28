@@ -10,7 +10,41 @@ A player object with HP, name, level, exp, and basic stats.
 
 from tabulate import tabulate
 
-class Player(object):
+class Character(object):
+    def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
+        """Creates a character object, containing methods which the player can use."""
+        self.level = level
+        self.max_hp = max_hp
+        self.hp = max_hp
+        self.name = name
+        self.strength = strength
+        self.dexterity = dexterity
+        self.intelligence = intelligence
+
+class Enemy(Character):
+    def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
+        """Creates an enemy object."""
+        self.level = level
+        self.max_hp = max_hp
+        self.hp = max_hp
+        self.name = name
+        self.strength = strength
+        self.dexterity = dexterity
+        self.intelligence = intelligence
+
+    def print_basic(self):
+        """Prints player statistics."""
+        print(("\n========================\n"
+            "{0}, Level {1}\n"
+            "HP: [{2}/{3}]\n"
+            "\t* Strength: {4}\n"
+            "\t* Dexterity: {5}\n"
+            "\t* Intelligence: {6}\n"
+            "=========================").format(self.name, self.level, \
+                                                    self.hp, self.max_hp, self.strength, \
+                                                    self.dexterity, self.intelligence))
+
+class Player(Character):
     def __init__(self, name, level, exp, max_exp, max_hp, strength, dexterity, intelligence):
         """Creates the player object, and has the methods which the player can use."""
         self.level = level
@@ -114,12 +148,15 @@ class Player(object):
                         [self.weapon_ability["ability"]["type"], self.weapon_ability["ability"]["name"], self.weapon_ability["ability"]["description"]]]
         print tabulate(table, headers, tablefmt="plain")
 
-    def parse_soulgem_ability(self):
+    def parse_sg_ability(self):
         """Takes in a 'damage' value from an ability and parses the value"""
         print("{0}\n{1} damage\n".format(self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["damage"]))
         if self.soulgem_ability["ability"]["name"] == "Prismatic Barrage":
             for i in range(self.weapon_sockets["sockets"]["amount"]):
                 print("A barrage hits for {0}".format(self.intelligence))
+        elif self.soulgem_ability["ability"]["name"] == "Charge":
+            print("Target has been stunned for {0} turns".format(self.soulgem_ability["ability"]["damage"]))
+
 
     def basic_attack(self):
         """Returns and prints amount of damage a basic attak does"""
@@ -140,6 +177,6 @@ class Player(object):
         if choice == 1:
             print(basic_attack())
         elif int(choice) == 2:
-            parse_soulgem_ability()
+            parse_sg_ability()
         elif int(choice) == 3:
             pass
