@@ -6,6 +6,9 @@ Author: mpmsimo
 Created: 1/7/2015
 
 A player object with HP, name, level, exp, and basic stats.
+
+To-do:
+ * Rename to character.py and change the imports neeeded.
 """
 
 from tabulate import tabulate
