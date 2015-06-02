@@ -9,6 +9,7 @@ To-do:
  * Fix error handling for menus (they current accept strings where they shouldnt)
 """
 
+import sys
 import weapon
 import player
 import soulgem
@@ -112,18 +113,27 @@ def generate_player(name, selected_soulgem, selected_weapon):
             break
     return sblplayer
 
-def generate_enemy():
+def generate_enemy(enemy_type):
     for enemy in enemies:
-        e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5])
-        return e
+        if enemy == enemy_type:
+            e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5])
+            print(e.print_basic())
+            return e
 
-def combat(player, enemy):
+def combat(player, enemy, turn="p"):
     """The most basic combat"""
     print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
-    turn_no = 0
+    if turn == "p": # If turn == 'p' it's the players turn.
+        player.attack()
+        turn = "e"
+    elif turn == "e": # Otherwise its the enemies turn.
+        enemy.attack()
+        turn = "p"
+    else:
+        print("Enemy hits you for 9999 damage\nYou have died.")
+        sys.exit(1)
     while enemy.hp > 1:
-        player.attack_menu()
-        #enemy.attack()
+        combat(player, enemy, turn)
 
 def main():
     print("Welcome to the Spellblade: Legacy!")
@@ -131,8 +141,12 @@ def main():
     #sblplayer.print_basic()
     sblplayer.print_advanced()
     sblplayer.show_abilities()
-    e = generate_enemy()
-    combat(sblplayer, e)
+    eg = generate_enemy("goblin")
+    eo = generate_enemy("orc")
+    et = generate_enemy("thug")
+    ea = generate_enemy("mystic")
+
+    combat(sblplayer, eo)
 
 if __name__ == "__main__":
     main()

@@ -47,6 +47,11 @@ class Enemy(Character):
                                                     self.hp, self.max_hp, self.strength, \
                                                     self.dexterity, self.intelligence))
 
+    def attack(self):
+        """Attacks a player"""
+        damage = max(self.strength, self.dexterity, self.intelligence)
+        print("{0} strikes you for {1} damage.".format(self.name, damage))
+
 class Player(Character):
     def __init__(self, name, level, exp, max_exp, max_hp, strength, dexterity, intelligence):
         """Creates the player object, and has the methods which the player can use."""
@@ -154,7 +159,7 @@ class Player(Character):
 
     def use_soulgem_ability(self):
         """Takes in a 'damage' value from an ability and parses the value"""
-        print("{0}\n{1} damage\n".format(self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["damage"]))
+        print("\n{0}\n{1} damage\n".format(self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["damage"]))
         if self.soulgem_ability["ability"]["name"] == "Prismatic Barrage":
             for i in range(self.weapon_sockets["sockets"]["amount"]):
                 print("A barrage hits for {0}".format(self.intelligence))
@@ -167,6 +172,10 @@ class Player(Character):
     def basic_attack(self):
         """Returns and prints amount of damage a basic attak does"""
         return self.weapon_damage
+
+    def attack(self, weapon=None):
+        print("Weapon: {0}\n".format(self.weapon_name))
+        self.attack_menu()
 
     def attack_menu(self):
         count = 1
@@ -183,6 +192,6 @@ class Player(Character):
         if choice == 1:
             print(basic_attack())
         elif int(choice) == 2:
-            player.use_soulgem_ability()
+            self.use_soulgem_ability()
         elif int(choice) == 3:
-            player.use_weapon_ability()
+            self.use_weapon_ability()
