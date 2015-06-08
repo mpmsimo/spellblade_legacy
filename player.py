@@ -13,6 +13,11 @@ To-do:
 
 from tabulate import tabulate
 
+player_options = {1: self.basic_attack,
+                    2: use_soulgem_ability,
+                    3: use_weapon_ability,
+                    0: flee}
+
 class Character(object):
     def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
         """Creates a character object, containing methods which the player can use."""
@@ -25,32 +30,46 @@ class Character(object):
         self.intelligence = intelligence
 
 class Enemy(Character):
-    def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
+    def __init__(self, name, enemy_type, level, max_hp, strength, dexterity, intelligence):
         """Creates an enemy object."""
         self.level = level
         self.max_hp = max_hp
         self.hp = max_hp
         self.name = name
+        self.enemy_type = enemy_type
         self.strength = strength
         self.dexterity = dexterity
         self.intelligence = intelligence
 
     def print_basic(self):
-        """Prints player statistics."""
+        """Prints enemy statistics."""
         print(("\n========================\n"
-            "{0}, Level {1}\n"
+            "{0}, Level {1} - {7}\n"
             "HP: [{2}/{3}]\n"
             "\t* Strength: {4}\n"
             "\t* Dexterity: {5}\n"
             "\t* Intelligence: {6}\n"
             "=========================").format(self.name, self.level, \
                                                     self.hp, self.max_hp, self.strength, \
-                                                    self.dexterity, self.intelligence))
-
+                                                    self.dexterity, self.intelligence, \
+                                                    self.enemy_type))
     def attack(self):
+        self.basic_attack()
+        self.ability()
+
+    def basic_attack(self):
         """Attacks a player"""
         damage = max(self.strength, self.dexterity, self.intelligence)
         print("{0} strikes you for {1} damage.".format(self.name, damage))
+        return damage
+
+    def ability(self):
+        """Enemy ability"""
+        if self.enemy_type == "Humanoid":
+            damage = 10
+            print("{0} punches you for {1} damage.".format(self.name, damage))
+        return damage
+
 
 class Player(Character):
     def __init__(self, name, level, exp, max_exp, max_hp, strength, dexterity, intelligence):
@@ -157,6 +176,26 @@ class Player(Character):
                         [self.weapon_ability["ability"]["type"], self.weapon_ability["ability"]["name"], self.weapon_ability["ability"]["description"]]]
         print tabulate(table, headers, tablefmt="plain")
 
+##### Combat
+    def attack_menu(self):
+        count = 1
+        attacks = ["Basic Attack"]
+        try:
+            attacks.append(self.soulgem_ability["ability"]["name"])
+            attacks.append(self.weapon_ability["ability"]["name"])
+        except ValueError:
+            pass
+        for i in attacks:
+            print("{0}. {1}".format(count, attacks[count-1]))
+            count += 1
+        print("0. Flee")
+        choice = raw_input("Choose an attack: ")
+        print(player_options[choice]())
+
+    def basic_attack(self):
+        """Returns and prints amount of damage a basic attak does"""
+        return self.weapon_damage
+
     def use_soulgem_ability(self):
         """Takes in a 'damage' value from an ability and parses the value"""
         print("\n{0}\n{1} damage\n".format(self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["damage"]))
@@ -169,29 +208,5 @@ class Player(Character):
     def use_weapon_ability(self):
         print("{0} uses a {1}".format(self.name, self.weapon_ability["ability"]["name"]))
 
-    def basic_attack(self):
-        """Returns and prints amount of damage a basic attak does"""
-        return self.weapon_damage
-
-    def attack(self, weapon=None):
-        print("Weapon: {0}\n".format(self.weapon_name))
-        self.attack_menu()
-
-    def attack_menu(self):
-        count = 1
-        attacks = ["Basic Attack"]
-        try:
-            attacks.append(self.soulgem_ability["ability"]["name"])
-            attacks.append(self.weapon_ability["ability"]["name"])
-        except ValueError:
-            pass
-        for i in attacks:
-            print("{0}. {1}".format(count, attacks[count-1]))
-            count += 1
-        choice = raw_input("Choose an attack: ")
-        if choice == 1:
-            print(basic_attack())
-        elif int(choice) == 2:
-            self.use_soulgem_ability()
-        elif int(choice) == 3:
-            self.use_weapon_ability()
+    def flee(self):
+        print("You have escaped the battle~~~~")

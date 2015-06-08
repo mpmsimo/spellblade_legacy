@@ -31,8 +31,10 @@ weapons = {"longsword": ["Longsword", 2, "Sword", 10,  \
             {"ability": {"name": "3x strike", "description": "Quickly attack three times in a row", "damage": "damage + .5(dex)", "type": "skill", "range": "melee"}}]}
 
 # A dictonary of enemies
-#def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
-enemies = {"goblin": ["Goblin", 2, 50, 4, 1, 0],
-            "orc": ["Orc", 3, 125, 5, 2, 0],
-            "thug": ["Thug", 3, 100, 4, 4, 0],
-            "mystic": ["Mystic", 3, 75, 0, 0, 7]}
+#def __init__(self, name, enemy_type, level, max_hp, strength, dexterity, intelligence):
+enemies = {"goblin": ["Goblin", "Humanoid", 2, 50, 4, 1, 0],
+            "orc": ["Orc", "Humanoid", 3, 125, 5, 2, 0],
+            "thug": ["Thug", "Humanoid", 3, 100, 4, 4, 0],
+            "dragon": ["Dragon", "Dragon", 50, 9999, 600, 400, 1000],
+            "thug": ["Thug", "Humanoid", 3, 100, 4, 4, 0],
+            "mystic": ["Mystic", "Humanoid", 3, 75, 0, 0, 7]}

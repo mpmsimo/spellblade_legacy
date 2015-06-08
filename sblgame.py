@@ -116,13 +116,21 @@ def generate_player(name, selected_soulgem, selected_weapon):
 def generate_enemy(enemy_type):
     for enemy in enemies:
         if enemy == enemy_type:
-            e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5])
+            e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5], enemies[enemy][6])
             print(e.print_basic())
             return e
 
-def combat(player, enemy, turn="p"):
+def round():
+    """A system for tracking character turns."""
+    enemy_count = 0
+    player_count = 0
+    turn_count = 0
+    return turn_count
+
+def combat(player, enemy, turn="p", turn_count=1):
     """The most basic combat"""
-    print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
+    if turn_count == 1:
+        print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
     if turn == "p": # If turn == 'p' it's the players turn.
         player.attack()
         turn = "e"
@@ -144,7 +152,8 @@ def main():
     eg = generate_enemy("goblin")
     eo = generate_enemy("orc")
     et = generate_enemy("thug")
-    ea = generate_enemy("mystic")
+    ed = generate_enemy("dragon")
+    aa = generate_enemy("mystic")
 
     combat(sblplayer, eo)
 
