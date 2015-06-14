@@ -13,11 +13,6 @@ To-do:
 
 from tabulate import tabulate
 
-player_options = {1: self.basic_attack,
-                    2: use_soulgem_ability,
-                    3: use_weapon_ability,
-                    0: flee}
-
 class Character(object):
     def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
         """Creates a character object, containing methods which the player can use."""
@@ -70,8 +65,8 @@ class Enemy(Character):
             print("{0} punches you for {1} damage.".format(self.name, damage))
         return damage
 
-
 class Player(Character):
+
     def __init__(self, name, level, exp, max_exp, max_hp, strength, dexterity, intelligence):
         """Creates the player object, and has the methods which the player can use."""
         self.level = level
@@ -190,7 +185,14 @@ class Player(Character):
             count += 1
         print("0. Flee")
         choice = raw_input("Choose an attack: ")
-        print(player_options[choice]())
+        if choice == "1":
+            self.basic_attack()
+        elif choice == "2":
+            self.use_soulgem_ability()
+        elif choice == "3":
+            self.use_weapon_ability()
+        elif choice == "0":
+            self.flee()
 
     def basic_attack(self):
         """Returns and prints amount of damage a basic attak does"""

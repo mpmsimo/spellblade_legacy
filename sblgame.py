@@ -120,13 +120,15 @@ def generate_enemy(enemy_type):
             print(e.print_basic())
             return e
 
-def turn_stats(turn, turn_count=1):
+def turn_stats(turn, turn_count=1, p_tc=0, e_tc=0):
     """A system for tracking character turns."""
     if turn == "e":
-        enemy_count += 1
+        e_tc += 1
     elif turn == "p":
-        player_count += 1
-    turn_count = enemy_count + player_count
+        p_tc += 1
+    else:
+        turn_count = e_tc + p_tc
+        print("[Round {1}] The combatants are unable to perform any actions this turn.".format(turn_count)) 
     return turn_count
 
 def combat(player, enemy, turn="p", turn_count=1):
@@ -135,7 +137,7 @@ def combat(player, enemy, turn="p", turn_count=1):
     if turn_count == 1:
         print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
     if turn == "p": # If turn == 'p' it's the players turn.
-        player.attack()
+        player.attack_menu()
         turn = "e"
     elif turn == "e": # Otherwise its the enemies turn.
         enemy.attack()
