@@ -172,7 +172,7 @@ class Player(Character):
         print tabulate(table, headers, tablefmt="plain")
 
 ##### Combat
-    def attack_menu(self):
+    def attack_menu(self, enemy):
         count = 1
         attacks = ["Basic Attack"]
         try:
@@ -186,28 +186,32 @@ class Player(Character):
         print("0. Flee")
         choice = raw_input("Choose an attack: ")
         if choice == "1":
-            self.basic_attack()
+            self.basic_attack(enemy)
         elif choice == "2":
-            self.use_soulgem_ability()
+            self.use_soulgem_ability(enemy)
         elif choice == "3":
-            self.use_weapon_ability()
+            self.use_weapon_ability(enemy)
         elif choice == "0":
             self.flee()
 
-    def basic_attack(self):
-        """Returns and prints amount of damage a basic attak does"""
-        return self.weapon_damage
+    def basic_attack(self, enemy):
+        """Returns and prints amount of damage a basic attack does"""
+        damage = self.weapon_damage
+        enemy.hp = enemy.hp - damage
+        print("A you swing {1} it hits for {0}".format(damage, "weapon"))
 
-    def use_soulgem_ability(self):
+    def use_soulgem_ability(self, enemy):
         """Takes in a 'damage' value from an ability and parses the value"""
         print("\n{0}\n{1} damage\n".format(self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["damage"]))
         if self.soulgem_ability["ability"]["name"] == "Prismatic Barrage":
             for i in range(self.weapon_sockets["sockets"]["amount"]):
-                print("A barrage hits for {0}".format(self.intelligence))
+                damage = self.intelligence
+                enemy.hp = enemy.hp - damage
+                print("A barrage hits for {0}".format(damage))
         elif self.soulgem_ability["ability"]["name"] == "Charge":
             print("Target has been stunned for {0} turns".format(self.soulgem_ability["ability"]["damage"]))
 
-    def use_weapon_ability(self):
+    def use_weapon_ability(self, enemy):
         print("{0} uses a {1}".format(self.name, self.weapon_ability["ability"]["name"]))
 
     def flee(self):

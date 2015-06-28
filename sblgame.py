@@ -137,7 +137,7 @@ def combat(player, enemy, turn="p", turn_count=1):
     if turn_count == 1:
         print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
     if turn == "p": # If turn == 'p' it's the players turn.
-        player.attack_menu()
+        player.attack_menu(enemy)
         turn = "e"
     elif turn == "e": # Otherwise its the enemies turn.
         enemy.attack()
