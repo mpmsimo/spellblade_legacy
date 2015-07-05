@@ -48,7 +48,18 @@ class Enemy(Character):
                                                     self.hp, self.max_hp, self.strength, \
                                                     self.dexterity, self.intelligence, \
                                                     self.enemy_type))
+
+    def print_combat(self):
+        """Prints combat health and skill bar."""
+        print(("\n========================\n"
+            "{0}, Level {1}\n"
+            "HP: [{2}/{3}]\n"
+            "=========================").format(self.name, self.level, \
+                                                    self.hp, self.max_hp))
+
+
     def attack(self):
+        self.print_combat()
         self.basic_attack()
         self.ability()
 
@@ -103,6 +114,14 @@ class Player(Character):
         """Prints debug information."""
         print("Player\nStr: {0}\nDex: {1}\nInt: {2}\n".format(self.strength, self.dexterity, self.intelligence))
         print("Soulgem\nStr: {0}\nDex: {1}\nInt: {2}\n".format(self.soulgem_strength, self.soulgem_dexterity, self.soulgem_intelligence))
+
+    def print_combat(self):
+        """Prints combat health and skill bar."""
+        print(("\n========================\n"
+            "{0}, Level {1}\n"
+            "HP: [{2}/{3}]\n"
+            "=========================").format(self.name, self.level, \
+                                                    self.hp, self.max_hp))
 
     def print_basic(self):
         """Prints player statistics."""
@@ -174,6 +193,7 @@ class Player(Character):
 ##### Combat
     def attack_menu(self, enemy):
         count = 1
+        self.print_combat()
         attacks = ["Basic Attack"]
         try:
             attacks.append(self.soulgem_ability["ability"]["name"])
