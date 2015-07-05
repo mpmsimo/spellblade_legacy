@@ -117,7 +117,6 @@ def generate_enemy(enemy_type):
     for enemy in enemies:
         if enemy == enemy_type:
             e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5], enemies[enemy][6])
-            print(e.print_basic())
             return e
 
 def turn_stats(turn, turn_count=1, p_tc=0, e_tc=0):
@@ -131,36 +130,54 @@ def turn_stats(turn, turn_count=1, p_tc=0, e_tc=0):
         print("[Round {1}] The combatants are unable to perform any actions this turn.".format(turn_count)) 
     return turn_count
 
+def print_combat(player, enemy):
+    """Prints the chars currently engaged in combat."""
+    print(80 * "=")
+    print("{0}: {1}/{2} HP || {3}: {4}/{5}".format(player.name, player.hp, player.max_hp, enemy.name, enemy.hp, enemy.max_hp))
+    print(80 * "=")
+
 def combat(player, enemy, turn="p", turn_count=1):
-    """The most basic combat"""
-    turn_stats(turn)
-    if turn_count == 1:
-        print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
-    if turn == "p": # If turn == 'p' it's the players turn.
-        player.attack_menu(enemy)
-        turn = "e"
-    elif turn == "e": # Otherwise its the enemies turn.
-        enemy.attack()
-        turn = "p"
-    else:
-        print("Enemy hits you for 9999 damage\nYou have died.")
-        sys.exit(1)
+    """While the enemy is alive the player will be engaged in combat."""
     while enemy.hp > 1:
-        combat(player, enemy, turn)
+        turn_stats(turn, turn_count)
+        if turn_count == 1:
+            print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
+            turn_count += 1
+        if turn == "p": # If turn == 'p' it's the players turn.
+            #print_combat(player, enemy)
+            player.attack_menu(enemy)
+            turn = "e"
+            turn_count += 1
+        elif turn == "e": # Otherwise its the enemies turn.
+            enemy.attack()
+            turn = "p"
+            turn_count += 1
+        else:
+            print("You just got crit by an error!\nError hits you for 9999 damage!\nYou have died...")
+            sys.exit(1)
+        print("")
+
+def gauntlet(player):
+    """The player will have to face three enemies in a row without a break."""
+    eg = generate_enemy("goblin")
+    eo = generate_enemy("orc")
+    et = generate_enemy("thug")
+    enemy_list = [eg, eo, et]
+    count = 1
+    for enemy in enemy_list:
+        print("Gauntlet Round #{0}".format(count))
+        combat(player, enemy)
+        count += 1
 
 def main():
     print("Welcome to the Spellblade: Legacy!")
     sblplayer = character_creation()
-    #sblplayer.print_basic()
-    sblplayer.print_advanced()
-    sblplayer.show_abilities()
-    eg = generate_enemy("goblin")
-    eo = generate_enemy("orc")
-    et = generate_enemy("thug")
-    ed = generate_enemy("dragon")
+    #sblplayer.print_advanced()
+    #sblplayer.show_abilities()
+    #ed = generate_enemy("dragon")
     aa = generate_enemy("mystic")
-
-    combat(sblplayer, eo)
+    gauntlet(sblplayer)
+    combat(sblplayer, aa)
 
 if __name__ == "__main__":
     main()

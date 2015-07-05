@@ -13,6 +13,8 @@ To-do:
 
 from tabulate import tabulate
 
+border = ((80 * "=") + "\n")
+
 class Character(object):
     def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
         """Creates a character object, containing methods which the player can use."""
@@ -51,12 +53,9 @@ class Enemy(Character):
 
     def print_combat(self):
         """Prints combat health and skill bar."""
-        print(("\n========================\n"
-            "{0}, Level {1}\n"
-            "HP: [{2}/{3}]\n"
-            "=========================").format(self.name, self.level, \
-                                                    self.hp, self.max_hp))
-
+        print(("{0}"
+            "{1}, Level {2} || HP: [{3}/{4}]\n"
+            "{5}").format(border, self.name, self.level, self.hp, self.max_hp, border))
 
     def attack(self):
         self.print_combat()
@@ -190,6 +189,16 @@ class Player(Character):
                         [self.weapon_ability["ability"]["type"], self.weapon_ability["ability"]["name"], self.weapon_ability["ability"]["description"]]]
         print tabulate(table, headers, tablefmt="plain")
 
+    def get_affinity(self):
+        """Returns affinity value (int)"""
+        if self.soulgem_affinity == "Strength":
+            affinity_value = self.strength
+        elif self.soulgem_affinity == "Dexterity":
+            affinity_value = self.dexterity
+        elif self.soulgem_affinity == "Intelligence":
+            affinity_value = self.intelligence
+        return affinity_value
+
 ##### Combat
     def attack_menu(self, enemy):
         count = 1
@@ -204,7 +213,7 @@ class Player(Character):
             print("{0}. {1}".format(count, attacks[count-1]))
             count += 1
         print("0. Flee")
-        choice = raw_input("Choose an attack: ")
+        choice = raw_input("CHOICE >> ")
         if choice == "1":
             self.basic_attack(enemy)
         elif choice == "2":
@@ -216,9 +225,10 @@ class Player(Character):
 
     def basic_attack(self, enemy):
         """Returns and prints amount of damage a basic attack does"""
-        damage = self.weapon_damage
+        # Wep base damage + affinity value + modifiers
+        damage = self.weapon_damage + self.get_affinity()
         enemy.hp = enemy.hp - damage
-        print("A you swing {1} it hits for {0}".format(damage, "weapon"))
+        print("You swing at {1} it hits for {0}".format(damage, enemy.name))
 
     def use_soulgem_ability(self, enemy):
         """Takes in a 'damage' value from an ability and parses the value"""
