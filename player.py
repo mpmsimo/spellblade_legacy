@@ -57,14 +57,15 @@ class Enemy(Character):
             "{1}, Level {2} || HP: [{3}/{4}]\n"
             "{5}").format(border, self.name, self.level, self.hp, self.max_hp, border))
 
-    def attack(self):
+    def attack(self, player):
         self.print_combat()
-        self.basic_attack()
-        self.ability()
+        self.basic_attack(player)
+        #self.ability()
 
-    def basic_attack(self):
+    def basic_attack(self, player):
         """Attacks a player"""
         damage = max(self.strength, self.dexterity, self.intelligence)
+        player.hp = player.hp - damage
         print("{0} strikes you for {1} damage.".format(self.name, damage))
         return damage
 
@@ -116,11 +117,9 @@ class Player(Character):
 
     def print_combat(self):
         """Prints combat health and skill bar."""
-        print(("\n========================\n"
-            "{0}, Level {1}\n"
-            "HP: [{2}/{3}]\n"
-            "=========================").format(self.name, self.level, \
-                                                    self.hp, self.max_hp))
+        print(("{0}"
+            "{1}, Level {2} || HP: [{3}/{4}]\n"
+            "{5}").format(border, self.name, self.level, self.hp, self.max_hp, border))
 
     def print_basic(self):
         """Prints player statistics."""
@@ -232,17 +231,17 @@ class Player(Character):
 
     def use_soulgem_ability(self, enemy):
         """Takes in a 'damage' value from an ability and parses the value"""
-        print("\n{0}\n{1} damage\n".format(self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["damage"]))
+        #print("\n{0}\n{1} damage\n".format(self.soulgem_ability["ability"]["name"], self.soulgem_ability["ability"]["damage"]))
         if self.soulgem_ability["ability"]["name"] == "Prismatic Barrage":
             for i in range(self.weapon_sockets["sockets"]["amount"]):
                 damage = self.intelligence
                 enemy.hp = enemy.hp - damage
-                print("A barrage hits for {0}".format(damage))
+                print("A barrage hits the {0} for {1} damage.".format(enemy.name, damage))
         elif self.soulgem_ability["ability"]["name"] == "Charge":
             print("Target has been stunned for {0} turns".format(self.soulgem_ability["ability"]["damage"]))
 
     def use_weapon_ability(self, enemy):
-        print("{0} uses a {1}".format(self.name, self.weapon_ability["ability"]["name"]))
+        print("{0} uses {1} and misses!".format(self.name, self.weapon_ability["ability"]["name"]))
 
     def flee(self):
         print("You have escaped the battle~~~~")

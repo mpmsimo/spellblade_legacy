@@ -10,6 +10,8 @@ To-do:
 """
 
 import sys
+import random
+
 import weapon
 import player
 import soulgem
@@ -149,7 +151,7 @@ def combat(player, enemy, turn="p", turn_count=1):
             turn = "e"
             turn_count += 1
         elif turn == "e": # Otherwise its the enemies turn.
-            enemy.attack()
+            enemy.attack(player)
             turn = "p"
             turn_count += 1
         else:
@@ -169,6 +171,23 @@ def gauntlet(player):
         combat(player, enemy)
         count += 1
 
+def explore(player, setting="forest"):
+    """What mischief will the adventurer get into here?"""
+    while player.hp >= 1:
+        if setting == "forest":
+            print("Forest menu options:\nq - walk along path, w - seek combat, e - event, r - rest\n")
+            choice = raw_input("What does {0} do? >> ".format(player.name))
+            if choice == "w":
+                print("You continue to walk down the forest path. Off in the distance you see various forest creatures running your way!")
+                gauntlet(player)
+            elif choice == "c":
+                combat(player, generate_enemy("goblin"))
+            elif choice == "i":
+                print("Your pack is empty, you look at your weapon and mumble to yourself.")
+            elif choice == "r":
+                hp_healed = random.randint(player.level, (player.level + player.intelligence))
+                print("You rest, and heal {0} hp!".format(hp_healed))
+
 def main():
     print("Welcome to the Spellblade: Legacy!")
     sblplayer = character_creation()
@@ -176,8 +195,8 @@ def main():
     #sblplayer.show_abilities()
     #ed = generate_enemy("dragon")
     aa = generate_enemy("mystic")
-    gauntlet(sblplayer)
-    combat(sblplayer, aa)
-
+    #gauntlet(sblplayer)
+    #combat(sblplayer, aa)
+    explore(sblplayer, "forest")
 if __name__ == "__main__":
     main()
