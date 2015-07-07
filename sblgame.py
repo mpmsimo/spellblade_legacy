@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 """
-game.py - This is where objects are created and the game is played.
+sblgame.py - This is where objects are created and the game is played.
 
 Author: mpmsimo
 Created: 2/21/2015
-
-To-do:
- * Fix error handling for menus (they current accept strings where they shouldnt)
 """
 
 import sys
@@ -17,6 +14,7 @@ import player
 import soulgem
 import game_information as gi
 
+border = ('=' * 80)
 souls = gi.souls
 weapons = gi.weapons
 enemies = gi.enemies
@@ -62,15 +60,15 @@ def choose_soulgem(affinity):
         sg = soulgem.Soulgem(souls[hero][0], souls[hero][1], souls[hero][2], souls[hero][3], souls[hero][4], souls[hero][5], souls[hero][6], souls[hero][7], souls[hero][8])
         if affinity == sg.affinity:
             soul_list.append(hero)
-            print("{0}\n{1}. {2}".format(80 * "=", count, sg.name))
+            print("{0}\n{1}. {2}".format(border, count, sg.name))
             sg.print_soulgem()
             count+=1
         elif affinity == None:
             soul_list.append(hero)
-            print("{0}\n{1}. {2}".format(80 * "=", count, sg.name))
+            print("{0}\n{1}. {2}".format(border, count, sg.name))
             sg.print_soulgem()
             count+=1
-    print(80 * "=")
+    print(border)
     choice = int(raw_input("\nChoose the soul you would like to control (0 to start over): "))
     if choice in range(1, len(soul_list)+1):
         print("\nYou chose {0}.\n".format(soul_list[choice-1]))
@@ -88,10 +86,10 @@ def choose_weapon():
     for wep in weapons:
         item = weapon.Weapon(weapons[wep][0], weapons[wep][1], weapons[wep][2], weapons[wep][3], weapons[wep][4], weapons[wep][5])
         weapon_list.append(wep)
-        print("{0}\n{1}. {2}".format(80 * "=", count, item.name))
+        print("{0}\n{1}. {2}".format(border, count, item.name))
         item.print_weapon()
         count+=1
-    print(80 * "=")
+    print(border)
     choice = int(raw_input("\nChoose the weapon you would like to use (0 to start over): "))
     if choice in range(1, len(weapon_list)+1):
         print("\nYou chose {0}.\n".format(weapon_list[choice-1]))
@@ -121,35 +119,23 @@ def generate_enemy(enemy_type):
             e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5], enemies[enemy][6])
             return e
 
-def turn_stats(turn, turn_count=1, p_tc=0, e_tc=0):
-    """A system for tracking character turns."""
-    if turn == "e":
-        e_tc += 1
-    elif turn == "p":
-        p_tc += 1
-    else:
-        turn_count = e_tc + p_tc
-        print("[Round {1}] The combatants are unable to perform any actions this turn.".format(turn_count)) 
-    return turn_count
-
-def print_combat(player, enemy):
-    """Prints the chars currently engaged in combat."""
-    print(80 * "=")
-    print("{0}: {1}/{2} HP || {3}: {4}/{5}".format(player.name, player.hp, player.max_hp, enemy.name, enemy.hp, enemy.max_hp))
-    print(80 * "=")
-
-def combat(player, enemy, turn="p", turn_count=1):
+def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, turn="p"):
     """While the enemy is alive the player will be engaged in combat."""
     while enemy.hp > 1:
-        turn_stats(turn, turn_count)
-        if turn_count == 1:
-            print("\nA {0} rushes towards {1}, prepare for battle!".format(enemy.name, player.name))
-            turn_count += 1
-        if turn == "p": # If turn == 'p' it's the players turn.
-            #print_combat(player, enemy)
-            player.attack_menu(enemy)
+        hp = player.get_combat()
+        ehp = enemy.get_combat()
+        # By default, it is the players turn.
+        if turn == "p":
+            # Start of turn, prints the round and event type.
+            intro = ("{0}\n"
+                    "\t\t\tEvent: {1} || Turn: {2}\n"
+                    "{3}\n"
+                    "\t{4}\t\t\t{5}\n"
+                    "\t{6}\t\tvs.\t{7}\n").format(border, event, combat_round, border, hp[0], ehp[0], hp[1], ehp[1])
+            player.attack_menu(enemy, intro)
             turn = "e"
             turn_count += 1
+            combat_round += 1
         elif turn == "e": # Otherwise its the enemies turn.
             enemy.attack(player)
             turn = "p"
@@ -160,15 +146,14 @@ def combat(player, enemy, turn="p", turn_count=1):
         print("")
 
 def gauntlet(player):
-    """The player will have to face three enemies in a row without a break."""
+    """The player will have to face a number of enemies in a row without a break."""
     eg = generate_enemy("goblin")
     eo = generate_enemy("orc")
     et = generate_enemy("thug")
     enemy_list = [eg, eo, et]
     count = 1
     for enemy in enemy_list:
-        print("Gauntlet Round #{0}".format(count))
-        combat(player, enemy)
+        combat(player, enemy, "Gauntlet")
         count += 1
 
 def explore(player, setting="forest"):
@@ -195,8 +180,7 @@ def main():
     #sblplayer.show_abilities()
     #ed = generate_enemy("dragon")
     aa = generate_enemy("mystic")
-    #gauntlet(sblplayer)
-    #combat(sblplayer, aa)
     explore(sblplayer, "forest")
+
 if __name__ == "__main__":
     main()

@@ -13,8 +13,6 @@ To-do:
 
 from tabulate import tabulate
 
-border = ((80 * "=") + "\n")
-
 class Character(object):
     def __init__(self, name, level, max_hp, strength, dexterity, intelligence):
         """Creates a character object, containing methods which the player can use."""
@@ -53,12 +51,18 @@ class Enemy(Character):
 
     def print_combat(self):
         """Prints combat health and skill bar."""
-        print(("{0}"
-            "{1}, Level {2} || HP: [{3}/{4}]\n"
-            "{5}").format(border, self.name, self.level, self.hp, self.max_hp, border))
+        print(("{0}, Level {1} || HP: [{2}/{3}]\n").format(self.name, self.level, self.hp, self.max_hp))
+
+    def get_combat(self):
+        """Prints combat health and skill bar. v2!"""
+        info = []
+        char = "{0}, Level {1}".format(self.name, self.level)
+        hp = "HP: [{0}/{1}]".format(self.hp, self.max_hp)
+        info.append(char)
+        info.append(hp)
+        return info
 
     def attack(self, player):
-        self.print_combat()
         self.basic_attack(player)
         #self.ability()
 
@@ -117,9 +121,16 @@ class Player(Character):
 
     def print_combat(self):
         """Prints combat health and skill bar."""
-        print(("{0}"
-            "{1}, Level {2} || HP: [{3}/{4}]\n"
-            "{5}").format(border, self.name, self.level, self.hp, self.max_hp, border))
+        print(("{0}, Level {1} || HP: [{2}/{3}]").format(self.name, self.level, self.hp, self.max_hp))
+
+    def get_combat(self):
+            """Prints combat health and skill bar. v2!"""
+            info = []
+            char = "{0}, Level {1}".format(self.name, self.level)
+            hp = "HP: [{0}/{1}]".format(self.hp, self.max_hp)
+            info.append(char)
+            info.append(hp)
+            return info
 
     def print_basic(self):
         """Prints player statistics."""
@@ -199,9 +210,8 @@ class Player(Character):
         return affinity_value
 
 ##### Combat
-    def attack_menu(self, enemy):
+    def attack_menu(self, enemy, intro):
         count = 1
-        self.print_combat()
         attacks = ["Basic Attack"]
         try:
             attacks.append(self.soulgem_ability["ability"]["name"])
@@ -213,6 +223,7 @@ class Player(Character):
             count += 1
         print("0. Flee")
         choice = raw_input("CHOICE >> ")
+        print("\n" + intro)
         if choice == "1":
             self.basic_attack(enemy)
         elif choice == "2":
