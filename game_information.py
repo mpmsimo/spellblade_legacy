@@ -38,3 +38,6 @@ enemies = {"goblin": ["Goblin", "Humanoid", 2, 50, 4, 1, 0],
             "dragon": ["Dragon", "Dragon", 50, 9999, 600, 400, 1000],
             "thug": ["Thug", "Humanoid", 3, 100, 4, 4, 0],
             "mystic": ["Mystic", "Humanoid", 3, 75, 0, 0, 7]}
+
+# A dictionary of loot!!!!
+loot = {"currency": ["gold", "gem fragments", "raven RAIN", "crusade MEMORY"]}

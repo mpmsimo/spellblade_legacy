@@ -128,22 +128,23 @@ def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, t
         if turn == "p":
             # Start of turn, prints the round and event type.
             intro = ("{0}\n"
-                    "\t\t\tEvent: {1} || Turn: {2}\n"
+                    "\t\tEvent: {1} || Turn: {2} || Combat Round: {8}\n"
                     "{3}\n"
                     "\t{4}\t\t\t{5}\n"
-                    "\t{6}\t\tvs.\t{7}\n").format(border, event, combat_round, border, hp[0], ehp[0], hp[1], ehp[1])
+                    "\t{6}\t\tvs.\t{7}\n").format(border, event, combat_round, border, hp[0], ehp[0], hp[1], ehp[1], combat_round)
             player.attack_menu(enemy, intro)
             turn = "e"
             turn_count += 1
             combat_round += 1
         elif turn == "e": # Otherwise its the enemies turn.
             enemy.attack(player)
-            turn = "p"
             turn_count += 1
+            turn = "p"
         else:
             print("You just got crit by an error!\nError hits you for 9999 damage!\nYou have died...")
             sys.exit(1)
         print("")
+    loot(player, enemy, event)
 
 def gauntlet(player):
     """The player will have to face a number of enemies in a row without a break."""
@@ -155,6 +156,11 @@ def gauntlet(player):
     for enemy in enemy_list:
         combat(player, enemy, "Gauntlet")
         count += 1
+
+def wander(player, setting="desert"):
+    """The player wanders aimlessly, what will be found?"""
+    options = [{"q": "quest"}, {"w": "wander"}, {"e": "inventory"}, {"r": "rest"}]}
+    print("Zone: {0}\n".format(setting))
 
 def explore(player, setting="forest"):
     """What mischief will the adventurer get into here?"""
@@ -172,6 +178,12 @@ def explore(player, setting="forest"):
             elif choice == "r":
                 hp_healed = random.randint(player.level, (player.level + player.intelligence))
                 print("You rest, and heal {0} hp!".format(hp_healed))
+
+def loot(player, enemy, event):
+    """Based on the enemy loot drops!"""
+    gold = 1
+    print("{0} drops {1} {2}".format(enemy.name, gold, gi.loot["currency"][0]))
+    player.gold += gold
 
 def main():
     print("Welcome to the Spellblade: Legacy!")

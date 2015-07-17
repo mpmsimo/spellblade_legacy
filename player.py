@@ -114,6 +114,8 @@ class Player(Character):
         self.soulgem_ability = None
         self.soulgem_passive = None
 
+        self.gold = 0
+
     def print_debug(self):
         """Prints debug information."""
         print("Player\nStr: {0}\nDex: {1}\nInt: {2}\n".format(self.strength, self.dexterity, self.intelligence))
@@ -141,9 +143,10 @@ class Player(Character):
             "\t* Strength: {6}\n"
             "\t* Dexterity: {7}\n"
             "\t* Intelligence: {8}\n"
+            "Gold: {9}\n"
             "=========================").format(self.name, self.level, self.exp, \
                                                     self.max_exp, self.hp, self.max_hp, self.strength, \
-                                                    self.dexterity, self.intelligence))
+                                                    self.dexterity, self.intelligence, self.gold))
 
     def print_advanced(self):
         """Prints player statistics."""
@@ -210,20 +213,21 @@ class Player(Character):
         return affinity_value
 
 ##### Combat
-    def attack_menu(self, enemy, intro):
+    def attack_menu(self, enemy, battle_stats):
         count = 1
         attacks = ["Basic Attack"]
         try:
             attacks.append(self.soulgem_ability["ability"]["name"])
             attacks.append(self.weapon_ability["ability"]["name"])
         except ValueError:
+            print("Value error!!!")
             pass
         for i in attacks:
             print("{0}. {1}".format(count, attacks[count-1]))
             count += 1
         print("0. Flee")
         choice = raw_input("CHOICE >> ")
-        print("\n" + intro)
+        print(("\n" * 5) + battle_stats)
         if choice == "1":
             self.basic_attack(enemy)
         elif choice == "2":
