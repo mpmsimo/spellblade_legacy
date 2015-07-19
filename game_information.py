@@ -28,7 +28,10 @@ weapons = {"longsword": ["Longsword", 2, "Sword", 10,  \
             {"ability": {"name": "Heavy Strike", "description": "A powerful two handed swing against a single target.", "damage": "damage + str", "type": "skill", "range": "melee"}}], 
           "sabre": ["Sabre", 0, "Sword", 5,  \
             {"sockets": {"amount": 0}}, \
-            {"ability": {"name": "3x strike", "description": "Quickly attack three times in a row", "damage": "damage + .5(dex)", "type": "skill", "range": "melee"}}]}
+            {"ability": {"name": "3x strike", "description": "Quickly attack three times in a row", "damage": "damage + .5(dex)", "type": "skill", "range": "melee"}}],
+          "blade": ["Blade", 0, "Dagger", 0,  \
+            {"sockets": {"amount": 7}}, \
+            {"ability": {"name": "Gemglow", "description": "Each gem in this weapon glows, healing you for each gem.", "damage": "gems+.5int", "type": "spell", "target": "ally"}}]}
 
 # A dictonary of enemies
 #def __init__(self, name, enemy_type, level, max_hp, strength, dexterity, intelligence):
