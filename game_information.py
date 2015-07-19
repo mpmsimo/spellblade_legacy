@@ -33,6 +33,21 @@ weapons = {"longsword": ["Longsword", 2, "Sword", 10,  \
             {"sockets": {"amount": 7}}, \
             {"ability": {"name": "Gemglow", "description": "Each gem in this weapon glows, healing you for each gem.", "damage": "gems+.5int", "type": "spell", "target": "ally"}}]}
 
+'''Weapon design
+Weapon (Determines what types of skills you can use)
+Affinity (Shows what the weapon synergizes with)
+Sockets (Allows placement of spellgems to further modify the weapons)
+Range (How far away you can attack from)
+Damage (How much damage you do)
+
+Ability (A skill unique to the weapon equipped)
+ name
+ damage
+ resource cost
+ target
+ effect
+'''
+
 # A dictonary of enemies
 #def __init__(self, name, enemy_type, level, max_hp, strength, dexterity, intelligence):
 enemies = {"goblin": ["Goblin", "Humanoid", 2, 50, 4, 1, 0],
