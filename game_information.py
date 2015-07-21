@@ -54,6 +54,7 @@ enemies = {"goblin": ["Goblin", "Humanoid", 2, 50, 4, 1, 0],
             "orc": ["Orc", "Humanoid", 3, 125, 5, 2, 0],
             "thug": ["Thug", "Humanoid", 3, 100, 4, 4, 0],
             "dragon": ["Dragon", "Dragon", 50, 9999, 600, 400, 1000],
+            "crusader": ["Crusader", "Humanoid", 10, 500, 13, 3, 7],
             "thug": ["Thug", "Humanoid", 3, 100, 4, 4, 0],
             "mystic": ["Mystic", "Humanoid", 3, 75, 0, 0, 7]}
 
