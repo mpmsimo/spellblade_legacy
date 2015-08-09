@@ -143,7 +143,6 @@ def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, t
         else:
             print("You just got crit by an error!\nError hits you for 9999 damage!\nYou have died...")
             sys.exit(1)
-        print("")
     loot(player, enemy, event)
 
 def gauntlet(player):
@@ -159,7 +158,7 @@ def gauntlet(player):
 
 def wander(player, setting="desert"):
     """The player wanders aimlessly, what will be found?"""
-    options = [{"q": "quest"}, {"w": "wander"}, {"e": "inventory"}, {"r": "rest"}]}
+    options = [{"q": "quest"}, {"w": "wander"}, {"e": "inventory"}, {"r": "rest"}]
     print("Zone: {0}\n".format(setting))
 
 def explore(player, setting="forest"):
