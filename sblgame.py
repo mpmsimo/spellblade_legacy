@@ -132,14 +132,17 @@ def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, t
                     "{3}\n"
                     "\t{4}\t\t\t{5}\n"
                     "\t{6}\t\tvs.\t{7}\n").format(border, event, combat_round, border, hp[0], ehp[0], hp[1], ehp[1], combat_round)
-            player.attack_menu(enemy, intro)
-            turn = "e"
-            turn_count += 1
-            combat_round += 1
+            if enemy.hp >= 0:
+                player.attack_menu(enemy, intro)
+                turn = "e"
+                turn_count += 1
+                combat_round += 1
         elif turn == "e": # Otherwise its the enemies turn.
             enemy.attack(player)
             turn_count += 1
             turn = "p"
+        elif enemy.hp <= 0:
+            break
         else:
             print("You just got crit by an error!\nError hits you for 9999 damage!\nYou have died...")
             sys.exit(1)
@@ -181,7 +184,10 @@ def explore(player, setting="forest"):
 def loot(player, enemy, event):
     """Based on the enemy loot drops!"""
     gold = 1
+    print("\n===============")
+    print("LOOOOOOOOOOOOOOOOOOOOT!")
     print("{0} drops {1} {2}".format(enemy.name, gold, gi.loot["currency"][0]))
+    print("\n===============")
     player.gold += gold
 
 def main():
