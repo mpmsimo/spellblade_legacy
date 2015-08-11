@@ -176,10 +176,15 @@ def explore(player, setting="forest"):
             elif choice == "c":
                 combat(player, generate_enemy("goblin"))
             elif choice == "i":
+                player.print_basic()
                 print("Your pack is empty, you look at your weapon and mumble to yourself.")
             elif choice == "r":
                 hp_healed = random.randint(player.level, (player.level + player.intelligence))
                 print("You rest, and heal {0} hp!".format(hp_healed))
+
+def shop(player, setting="kingdom"):
+    """Add a shop."""
+    print("What do you want to buy?!!")
 
 def loot(player, enemy, event):
     """Based on the enemy loot drops!"""
