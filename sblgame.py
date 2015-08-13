@@ -27,7 +27,6 @@ def character_creation():
     soulgem = choose_soulgem(affinity)
     weapon = choose_weapon()
     player = generate_player(player_name, soulgem, weapon)
-    player = generate_player("Reulan", soulgem, weapon)
     return player
 
 def name_character():
@@ -121,7 +120,7 @@ def generate_enemy(enemy_type):
 
 def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, turn="p"):
     """While the enemy is alive the player will be engaged in combat."""
-    while True:
+    while enemy.hp >= 1:
         if enemy.hp >= 1:
             hp = player.get_combat()
             ehp = enemy.get_combat()
@@ -138,6 +137,8 @@ def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, t
                     turn = "e"
                     turn_count += 1
                     combat_round += 1
+                else:
+                    break
             elif turn == "e": # Otherwise its the enemies turn.
                 enemy.attack(player)
                 turn_count += 1
@@ -169,23 +170,31 @@ def explore(player, setting="forest"):
     """What mischief will the adventurer get into here?"""
     while player.hp >= 1:
         if setting == "forest":
-            print("Forest menu options:\nq - walk along path, w - seek combat, e - event, r - rest\n")
-            choice = raw_input("What does {0} do? >> ".format(player.name))
-            if choice == "w":
+            print("\nForest menu options:\nq - walk along path, w - combat, e - inspect yourself, r - rest\na - shop")
+            choice = raw_input("\nWhat does {0} do? >> ".format(player.name))
+            if choice == "q":
                 print("You continue to walk down the forest path. Off in the distance you see various forest creatures running your way!")
                 gauntlet(player)
-            elif choice == "c":
+            elif choice == "w":
                 combat(player, generate_enemy("goblin"))
-            elif choice == "i":
-                player.print_basic()
+            elif choice == "e":
+                player.print_advanced()
+                player.show_abilities()
                 print("Your pack is empty, you look at your weapon and mumble to yourself.")
             elif choice == "r":
                 hp_healed = random.randint(player.level, (player.level + player.intelligence))
                 print("You rest, and heal {0} hp!".format(hp_healed))
+            elif choice == "a":
+                shop(player)
 
 def shop(player, setting="kingdom"):
     """Add a shop."""
-    print("What do you want to buy?!!")
+    print("What do you want to buy?!!/n1. Marbled Spellgem\n2.Nykez Shoes")
+    item = ""
+    choice = raw_input("\nCHOICE >> ")
+    if choice == 2 or choice == "2":
+        item  = "shoes"
+    print("You bought {}.".format(item))
 
 def loot(player, enemy, event):
     """Based on the enemy loot drops!"""

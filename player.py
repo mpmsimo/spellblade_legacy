@@ -222,13 +222,13 @@ class Player(Character):
         except ValueError:
             print("Value error!!!")
             pass
+        print(("\n" * 5) + battle_stats)
         if enemy.hp >= 1:
             for i in attacks:
                 print("{0}. {1}".format(count, attacks[count-1]))
                 count += 1
             print("0. Flee")
             choice = raw_input("CHOICE >> ")
-            print(("\n" * 5) + battle_stats)
             if choice == "1":
                 self.basic_attack(enemy)
             elif choice == "2":
