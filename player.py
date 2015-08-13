@@ -222,20 +222,21 @@ class Player(Character):
         except ValueError:
             print("Value error!!!")
             pass
-        for i in attacks:
-            print("{0}. {1}".format(count, attacks[count-1]))
-            count += 1
-        print("0. Flee")
-        choice = raw_input("CHOICE >> ")
-        print(("\n" * 5) + battle_stats)
-        if choice == "1":
-            self.basic_attack(enemy)
-        elif choice == "2":
-            self.use_soulgem_ability(enemy)
-        elif choice == "3":
-            self.use_weapon_ability(enemy)
-        elif choice == "0":
-            self.flee()
+        if enemy.hp >= 1:
+            for i in attacks:
+                print("{0}. {1}".format(count, attacks[count-1]))
+                count += 1
+            print("0. Flee")
+            choice = raw_input("CHOICE >> ")
+            print(("\n" * 5) + battle_stats)
+            if choice == "1":
+                self.basic_attack(enemy)
+            elif choice == "2":
+                self.use_soulgem_ability(enemy)
+            elif choice == "3":
+                self.use_weapon_ability(enemy)
+            elif choice == "0":
+                self.flee()
 
     def basic_attack(self, enemy):
         """Returns and prints amount of damage a basic attack does"""

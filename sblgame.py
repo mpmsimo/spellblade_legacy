@@ -121,31 +121,32 @@ def generate_enemy(enemy_type):
 
 def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, turn="p"):
     """While the enemy is alive the player will be engaged in combat."""
-    while enemy.hp > 1:
-        hp = player.get_combat()
-        ehp = enemy.get_combat()
-        # By default, it is the players turn.
-        if turn == "p":
-            # Start of turn, prints the round and event type.
-            intro = ("{0}\n"
-                    "\t\tEvent: {1} || Turn: {2} || Combat Round: {8}\n"
-                    "{3}\n"
-                    "\t{4}\t\t\t{5}\n"
-                    "\t{6}\t\tvs.\t{7}\n").format(border, event, combat_round, border, hp[0], ehp[0], hp[1], ehp[1], combat_round)
-            if enemy.hp >= 0:
-                player.attack_menu(enemy, intro)
-                turn = "e"
+    while True:
+        if enemy.hp >= 1:
+            hp = player.get_combat()
+            ehp = enemy.get_combat()
+            # By default, it is the players turn.
+            if turn == "p":
+                # Start of turn, prints the round and event type.
+                intro = ("{0}\n"
+                        "\t\tEvent: {1} || Turn: {2} || Combat Round: {8}\n"
+                        "{3}\n"
+                        "\t{4}\t\t\t{5}\n"
+                        "\t{6}\t\tvs.\t{7}\n").format(border, event, combat_round, border, hp[0], ehp[0], hp[1], ehp[1], combat_round)
+                if enemy.hp >= 0:
+                    player.attack_menu(enemy, intro)
+                    turn = "e"
+                    turn_count += 1
+                    combat_round += 1
+            elif turn == "e": # Otherwise its the enemies turn.
+                enemy.attack(player)
                 turn_count += 1
-                combat_round += 1
-        elif turn == "e": # Otherwise its the enemies turn.
-            enemy.attack(player)
-            turn_count += 1
-            turn = "p"
-        elif enemy.hp <= 0:
-            break
-        else:
-            print("You just got crit by an error!\nError hits you for 9999 damage!\nYou have died...")
-            sys.exit(1)
+                turn = "p"
+            else:
+                print("You just got crit by an error!\nError hits you for 9999 damage!\nYou have died...")
+                sys.exit(1)
+        #elif enemy.hp <= 0:
+            #print("{} has been slain!".format(enemy.name))
     loot(player, enemy, event)
 
 def gauntlet(player):
