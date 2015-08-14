@@ -229,6 +229,7 @@ class Player(Character):
                 count += 1
             print("0. Flee")
             choice = raw_input("CHOICE >> ")
+            print("\n")
             if choice == "1":
                 self.basic_attack(enemy)
             elif choice == "2":

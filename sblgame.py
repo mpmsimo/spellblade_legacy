@@ -118,10 +118,16 @@ def generate_enemy(enemy_type):
             e = player.Enemy(enemies[enemy][0], enemies[enemy][1], enemies[enemy][2], enemies[enemy][3], enemies[enemy][4], enemies[enemy][5], enemies[enemy][6])
             return e
 
+def hero_death():
+    print("Player has been slain!")
+    sys.exit(1)
+
 def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, turn="p"):
     """While the enemy is alive the player will be engaged in combat."""
     while enemy.hp >= 1:
-        if enemy.hp >= 1:
+        if player.hp <= 0:
+            hero_death()
+        elif enemy.hp >= 1:
             hp = player.get_combat()
             ehp = enemy.get_combat()
             # By default, it is the players turn.
@@ -146,9 +152,9 @@ def combat(player, enemy, event="Random Battle", turn_count=1, combat_round=1, t
             else:
                 print("You just got crit by an error!\nError hits you for 9999 damage!\nYou have died...")
                 sys.exit(1)
-        #elif enemy.hp <= 0:
+        elif enemy.hp <= 0:
             #print("{} has been slain!".format(enemy.name))
-    loot(player, enemy, event)
+            loot(player, enemy, event)
 
 def gauntlet(player):
     """The player will have to face a number of enemies in a row without a break."""
@@ -199,10 +205,10 @@ def shop(player, setting="kingdom"):
 def loot(player, enemy, event):
     """Based on the enemy loot drops!"""
     gold = 1
-    print("\n===============")
-    print("LOOOOOOOOOOOOOOOOOOOOT!")
-    print("{0} drops {1} {2}".format(enemy.name, gold, gi.loot["currency"][0]))
-    print("\n===============")
+    print("\n"+border)
+    print("\t\t\t\t  Loot")
+    print("{0} drops {1} {2}.".format(enemy.name, gold, gi.loot["currency"][0]))
+    print(border)
     player.gold += gold
 
 def main():
