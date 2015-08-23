@@ -218,6 +218,7 @@ def main():
     #sblplayer.show_abilities()
     #ed = generate_enemy("dragon")
     aa = generate_enemy("mystic")
+    combat(sblplayer, aa)
     explore(sblplayer, "forest")
 
 if __name__ == "__main__":
