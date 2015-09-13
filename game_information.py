@@ -33,6 +33,7 @@ weapons = {"longsword": ["Longsword", 2, "Sword", 10,  \
             {"sockets": {"amount": 7}}, \
             {"ability": {"name": "Gemglow", "description": "Each gem in this weapon glows, healing you for each gem.", "damage": "gems+.5int", "type": "spell", "target": "ally"}}]}
 
+
 '''Weapon design
 Weapon (Determines what types of skills you can use)
 Affinity (Shows what the weapon synergizes with)
@@ -48,6 +49,16 @@ Ability (A skill unique to the weapon equipped)
  effect
 '''
 
+''' Items
+item
+ -type
+ -consumable?
+ -others
+'''
+
+# dictionary name, item name, rank, description, target
+consumable_items = {"healing_potion": ["Healing Potion", 1, "A small healing potion with magical properties", "self"]}
+
 # A dictonary of enemies
 #def __init__(self, name, enemy_type, level, max_hp, strength, dexterity, intelligence):
 enemies = {"goblin": ["Goblin", "Humanoid", 2, 50, 4, 1, 0],
@@ -56,6 +67,7 @@ enemies = {"goblin": ["Goblin", "Humanoid", 2, 50, 4, 1, 0],
             "dragon": ["Dragon", "Dragon", 50, 9999, 600, 400, 1000],
             "crusader": ["Crusader", "Humanoid", 10, 500, 13, 3, 7],
             "thug": ["Thug", "Humanoid", 3, 100, 4, 4, 0],
+            "pirate": ["Pirate", "Humanoid", 5, 120, 5, 4, 2],
             "mystic": ["Mystic", "Humanoid", 3, 75, 0, 0, 7]}
 
 # A dictionary of loot!!!!

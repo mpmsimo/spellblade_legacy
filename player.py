@@ -258,7 +258,10 @@ class Player(Character):
             print("Target has been stunned for {0} turns".format(self.soulgem_ability["ability"]["damage"]))
 
     def use_weapon_ability(self, enemy):
-        print("{0} uses {1} and misses!".format(self.name, self.weapon_ability["ability"]["name"]))
+        if self.weapon_ability["ability"]["name"] == "Heavy Strike":
+            damage = (self.weapon_damage + self.strength) * 1.75
+            enemy.hp = enemy.hp - damage
+            print("Heavy Strike {0} the target dealing {1} damage.".format("smashes", damage))
 
     def flee(self):
         print("You have escaped the battle~~~~")

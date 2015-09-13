@@ -195,7 +195,7 @@ def explore(player, setting="forest"):
 
 def shop(player, setting="kingdom"):
     """Add a shop."""
-    print("What do you want to buy?!!/n1. Marbled Spellgem\n2.Nykez Shoes")
+    print("What do you want to buy?!!\n1. Marbled Spellgem\n2. Nykez Shoes")
     item = ""
     choice = raw_input("\nCHOICE >> ")
     if choice == 2 or choice == "2":
