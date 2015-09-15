@@ -262,6 +262,12 @@ class Player(Character):
             damage = (self.weapon_damage + self.strength) * 1.75
             enemy.hp = enemy.hp - damage
             print("Heavy Strike {0} the target dealing {1} damage.".format("smashes", damage))
+        if self.weapon_ability["ability"]["name"] == "Gemglow":
+            healing = (self.weapon_damage + self.intelligence)
+            self.hp = self.hp + healing
+            if self.hp >= self.max_hp:
+                self.hp = self.max_hp
+            print("Gemglow heals you for {0} damage.".format(healing))
 
     def flee(self):
         print("You have escaped the battle~~~~")
