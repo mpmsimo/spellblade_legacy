@@ -72,3 +72,34 @@ enemies = {"goblin": ["Goblin", "Humanoid", 2, 50, 4, 1, 0],
 
 # A dictionary of loot!!!!
 loot = {"currency": ["gold", "gem fragments", "raven RAIN", "crusade MEMORY"]}
+
+###
+# Menus and text output
+###
+"""
+def print_basic_stats(name, level, 
+        print(("\n========================\n"
+            "{0}, Level {1} - {7}\n"
+            "HP: [{2}/{3}]\n"
+            "\t* Strength: {4}\n"
+            "\t* Dexterity: {5}\n"
+            "\t* Intelligence: {6}\n"
+            "=========================").format(self.name, self.level, \
+
+def print_advanced_stats(name, level, exp, max_exp, hp, max_hp, strength, \
+    dexterity, intelligence, weapon_name, weapon_type, weapon_damage, \
+    weapon_sockets):
+        print(("\n========================\n"
+            "{0}, Level {1}\n"
+            "XP: [{2}/{3}]\n"
+            "HP: [{4}/{5}]\n"
+            "\t* Strength: {6}\n"
+            "\t* Dexterity: {7}\n"
+            "\t* Intelligence: {8}\n"
+            "\nWeapon: {9}, {10}\n"
+            "\t* Damage: {11}\n"
+            "\t* Sockets: {12}\n"
+            "=========================").format(self.name, self.level, self.exp, \
+                                                    self.max_exp, self.hp, self.max_hp, self.strength, \
+                                                    self.dexterity, self.intelligence, self.weapon_name, self.weapon_type, self.weapon_damage, self.weapon_sockets["sockets"]["amount"]))
+"""
