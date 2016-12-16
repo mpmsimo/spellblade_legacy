@@ -258,6 +258,7 @@ class Player(Character):
             print("Target has been stunned for {0} turns".format(self.soulgem_ability["ability"]["damage"]))
 
     def use_weapon_ability(self, enemy):
+        #read json object
         if self.weapon_ability["ability"]["name"] == "Heavy Strike":
             damage = (self.weapon_damage + self.strength) * 1.75
             enemy.hp = enemy.hp - damage
