@@ -9,10 +9,10 @@ Created: 2/21/2015
 import sys
 import random
 
-import weapon
-import player
-import soulgem
-import game_information as gi
+import sbl.weapon as weapon
+import sbl.player as player
+import sbl.soulgem as soulgem
+import sbl.game_information as gi
 
 border = ('=' * 80)
 souls = gi.souls
